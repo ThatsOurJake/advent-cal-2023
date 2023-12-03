@@ -1,112 +1,76 @@
-import Image from 'next/image'
+'use server';
 
-export default function Home() {
+import Link from 'next/link';
+import Cell from './components/cell';
+import getUser from './utils/get-user';
+
+export default async function Home() {
+  const user = await getUser();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="relative bg-black min-w-screen min-h-screen">
+      <div aria-hidden className="absolute inset-0 h-full w-full bg-cover blur-sm" style={{ backgroundImage: `url('/background.jpg')`}} />
+      <div className="py-2">
+        <section className="relative w-full md:w-1/2  mx-auto z-10 p-4 bg-white rounded-md">
+          <p className="text-4xl font-bold text-center drop-shadow-md">
+            <span className="text-red-500">2</span>
+            <span className="text-green-500">0</span>
+            <span className="text-red-500">2</span>
+            <span className="text-green-500">3</span>
+            <span className="text-red-500"> - </span>
+            <span className="text-green-500">J</span>
+            <span className="text-red-500">i</span>
+            <span className="text-green-500">g</span>
+            <span className="text-red-500">g</span>
+            <span className="text-green-500">l</span>
+            <span className="text-red-500">y</span>
+            <span className="text-green-500">d</span>
+            <span className="text-red-500">u</span>
+            <span className="text-green-500">c</span>
+            <span className="text-red-500">k</span>
+            <span className="text-green-500">s</span>
+            <span className="text-red-500"> </span>
+            <span className="text-green-500">A</span>
+            <span className="text-red-500">d</span>
+            <span className="text-green-500">v</span>
+            <span className="text-red-500">e</span>
+            <span className="text-green-500">n</span>
+            <span className="text-red-500">t</span>
+          </p>
+          <p className="mt-4 text-center">Welcome {user.name} from {user.squad}!</p>
+          <p className='text-center'>✨ Current Points: <b>{user.points || '0'}</b> ✨</p>
+        </section>
+        <div className="relative w-full md:w-2/3 z-10 mx-auto grid grid-cols-5 grid-rows-5 my-2">
+          <Cell color="blue" value="2" />
+          <Cell color="red" value="6" />
+          <Cell color="orange" value="4" />
+          <Cell color="green" value="13" />
+          <Cell color="blue" value="21" />
+          <Cell color="red" value="19" />
+          <Cell color="orange" value="7" />
+          <Cell color="green" value="10" />
+          <Cell color="blue" value="5" />
+          <Cell color="orange" value="3" />
+          <Cell color="blue" value="15" />
+          <Cell color="red" value="20" />
+          <Cell color="blue" value="1" />
+          <Cell color="green" value="11" />
+          <Cell color="blue" value="18" />
+          <Cell color="red" value="8" />
+          <Cell color="blue" value="24" />
+          <Cell color="orange" value="12" />
+          <Cell color="red" value="17" />
+          <Cell color="blue" value="14" />
+          <Cell color="orange" value="9" />
+          <Cell color="red" value="16" />
+          <Cell color="blue" value="22" />
+          <Cell color="green" value="25" />
+          <Cell color="orange" value="23" />
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <section className="relative w-full md:w-1/2  mx-auto z-10 p-4 bg-white rounded-md text-center">
+          <Link href="/leaderboard" className="text-blue-500 hover:underline">View the leaderboard!</Link>
+        </section>
+        <div className='hidden bg-red-200 bg-green-200 bg-blue-200 bg-orange-200 grid-cols-4 grid-rows-2 text-orange-500 text-gray-500 text-yellow-500' />
       </div>
     </main>
   )
