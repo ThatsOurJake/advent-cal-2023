@@ -18,24 +18,20 @@ export default async function Home() {
             <span className="text-red-500">2</span>
             <span className="text-green-500">3</span>
             <span className="text-red-500"> - </span>
-            <span className="text-green-500">J</span>
+            <span className="text-green-500">D</span>
             <span className="text-red-500">i</span>
             <span className="text-green-500">g</span>
-            <span className="text-red-500">g</span>
+            <span className="text-red-500">i</span>
+            <span className="text-green-500">t</span>
+            <span className="text-red-500">a</span>
             <span className="text-green-500">l</span>
-            <span className="text-red-500">y</span>
+            <span> </span>
+            <span className="text-red-500">A</span>
             <span className="text-green-500">d</span>
-            <span className="text-red-500">u</span>
-            <span className="text-green-500">c</span>
-            <span className="text-red-500">k</span>
-            <span className="text-green-500">s</span>
-            <span className="text-red-500"> </span>
-            <span className="text-green-500">A</span>
-            <span className="text-red-500">d</span>
-            <span className="text-green-500">v</span>
-            <span className="text-red-500">e</span>
-            <span className="text-green-500">n</span>
-            <span className="text-red-500">t</span>
+            <span className="text-red-500">v</span>
+            <span className="text-green-500">e</span>
+            <span className="text-red-500">n</span>
+            <span className="text-green-500">t</span>
           </p>
           <p className="mt-4 text-center">Welcome {user.name} from {user.squad}!</p>
           <p className='text-center'>✨ Current Points: <b>{user.points || '0'}</b> ✨</p>

@@ -1,10 +1,26 @@
 import { MongoClient, WithId } from "mongodb";
 import crypto from "crypto";
+import cfenv from 'cfenv';
 
 import logger from "@/logger";
 
-const uri = "mongodb://0.0.0.0:27017/advent";
-const client = new MongoClient(uri);
+const getUri = (): string => {
+  const serviceName = process.env.MONGO_SERVICE_NAME;
+  const replicaSet = 'nimbusReplicaSet';
+
+  if (serviceName) {
+    const appEnv = cfenv.getAppEnv();
+    const serviceCredentials = appEnv.getServiceCreds(serviceName);
+
+    if (serviceCredentials) {
+      return `${serviceCredentials.uri}?replicaSet=${replicaSet}`;
+    }
+  }
+
+  return "mongodb://0.0.0.0:27017/advent";
+}
+
+const client = new MongoClient(getUri());
 let isConnected = false;
 
 const connect = async () => {
