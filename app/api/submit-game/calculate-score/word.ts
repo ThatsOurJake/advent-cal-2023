@@ -6,8 +6,6 @@ export interface WordPayload {
 const calculateWordScore = ({ timeTaken, numberCorrect }: WordPayload): number => {
   const baseScore = numberCorrect * 25;
 
-  console.log(numberCorrect);
-
   if (timeTaken < 60) {
     return baseScore + 75;
   } else if (timeTaken < 90) {

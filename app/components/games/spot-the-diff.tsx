@@ -32,6 +32,10 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   const startTime = useRef<number>(0);
 
   const finishGame = useCallback(() => {
+    if (lock.current) {
+      return;
+    }
+
     const calculated = Math.ceil((Date.now() - startTime.current) / 1000);
 
     setSubmittingScore(true);

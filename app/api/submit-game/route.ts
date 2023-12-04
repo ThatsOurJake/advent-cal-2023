@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import mongo from "@/app/services/mongo";
 
 import CALCULATOR_MAP from "./calculate-score";
-import { MatchPayload } from "./calculate-score/match";
 
 interface BasePayload {
   nonce: string;

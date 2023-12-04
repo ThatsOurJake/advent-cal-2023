@@ -3,6 +3,7 @@ import crypto from "crypto";
 import cfenv from 'cfenv';
 
 import logger from "@/logger";
+import sumArray from "@/app/utils/sum-arr";
 
 const getUri = (): string => {
   const serviceName = process.env.MONGO_SERVICE_NAME;
@@ -44,7 +45,6 @@ interface CreateUserDTO {
   name: string;
   squad: string;
   uuid: string;
-  points: number;
   daysComplete: string[];
   pointsToDays: { day: string; points: number }[];
 }
@@ -57,7 +57,6 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
     name: data.name,
     squad: data.squad,
     uuid: crypto.randomUUID(),
-    points: 0,
     daysComplete: [],
     pointsToDays: [],
   };
@@ -67,16 +66,27 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
   return obj;
 };
 
-const getUser = async (uuid: string): Promise<WithId<CreateUserDTO> | null> => {
+interface UserWithScore extends CreateUserDTO {
+  points: number;
+}
+
+const getUser = async (uuid: string): Promise<UserWithScore | null> => {
   await connect();
 
   const col = client.db().collection<CreateUserDTO>("users");
   const obj = await col.findOne({ uuid });
 
-  return obj;
+  if (obj) {
+    return {
+      ...obj,
+      points: sumArray(obj.pointsToDays.map(x => x.points)),
+    }
+  }
+
+  return null;
 };
 
-export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'points' | 'uuid'>;
+export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'uuid'> & { points: number };
 type ScoreboardDTO = ScoreboardUser[];
 
 const getScoreboard = async (): Promise<ScoreboardDTO> => {
@@ -88,7 +98,7 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
   return users.map(x => ({
     name: x.name,
     squad: x.squad,
-    points: x.points,
+    points: sumArray(x.pointsToDays.map(x => x.points)),
     uuid: x.uuid,
   }))
   .filter(x => !(x.name.toLowerCase() === 'jake king' && x.squad.toLowerCase() === 'jp'))
@@ -98,7 +108,7 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
 const addPoints = async (uuid: string, points: number, dayNumber: string) => {
   await connect();
 
-  logger.info('[addPoints] - Executing', __filename);
+  logger.info(`[addPoints] - Executing ${points}`);
   const col = client.db().collection<CreateUserDTO>("users");
   const user = await getUser(uuid);
 
@@ -107,7 +117,7 @@ const addPoints = async (uuid: string, points: number, dayNumber: string) => {
     return;
   }
 
-  await col.findOneAndUpdate({ uuid }, { $inc: { points }, $push: { daysComplete: dayNumber, pointsToDays: { day: dayNumber, points} } });
+  await col.findOneAndUpdate({ uuid }, { $push: { daysComplete: dayNumber, pointsToDays: { day: dayNumber, points} } });
 }
 
 const mongo = {
