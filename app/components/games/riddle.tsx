@@ -1,9 +1,7 @@
 'use client';
 
-import { useRef, useState } from "react";
-import prettyMilliseconds from "pretty-ms";
+import { useState } from "react";
 
-import rng from "@/app/utils/rng";
 import api from "@/app/utils/api";
 import type { RiddlePayload } from '@/app/api/submit-game/calculate-score/riddle';
 import logger from "@/logger";

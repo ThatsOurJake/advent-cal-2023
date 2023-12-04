@@ -68,7 +68,7 @@ export async function POST(req: Request) {
   }
 
   const calculator = CALCULATOR_MAP[game];
-  let points = 0;
+  let points = -1;
 
   if (calculator) {
     points = calculator(data.payload);
