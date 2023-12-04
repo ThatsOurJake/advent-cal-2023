@@ -3,6 +3,7 @@ const dayGameMap: { [day: string]: string } = {
   2: 'word',
   3: 'riddle',
   4: 'diff',
+  5: 'find',
 };
 
 export default dayGameMap;

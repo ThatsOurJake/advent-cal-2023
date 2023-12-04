@@ -5,10 +5,10 @@ import { MouseEvent, useCallback, useRef, useState } from "react";
 import prettyMilliseconds from "pretty-ms";
 
 import api from "@/app/utils/api";
-import type { DiffPayload } from "@/app/api/submit-game/calculate-score/diff";
 import logger from "@/logger";
+import type { FindPayload } from "@/app/api/submit-game/calculate-score/find";
 
-interface SpotTheDiffProps {
+interface FindSantaProps {
   baseFolder: string;
   nonce: string;
   averages: number[];
@@ -17,7 +17,7 @@ interface SpotTheDiffProps {
 const THRESHOLD = 3;
 const DELAY = 750;
 
-const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
+const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
   const [answers, setAnswers] = useState<number[]>([]);
   const [checkmarks, setCheckmarks] = useState<number[][]>([]);
   const [hasStarted, setHasStarted] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
 
     setSubmittingScore(true);
 
-    api.submitGameResult<DiffPayload>(nonce, { timeTaken: calculated, correctGuesses: answers.length })
+    api.submitGameResult<FindPayload>(nonce, { timeTaken: calculated, correctGuesses: answers.length })
       .then(s => setFinalScore(s))
       .catch((e) => {
         setSubmitError(true);
@@ -89,6 +89,8 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     const sum = data?.reduce((acc, current) => acc += current, 0);
     const avg = Math.floor(sum / data.length);
 
+    console.log(avg);
+
     const answer = averages.find(x => {
       const lowerBound = x - THRESHOLD;
       const upperBound = x + THRESHOLD;
@@ -116,8 +118,8 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Can you spot the differences between the left and right image?</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the images</button>
+        <p className="text-center text-lg mb-2">🧐 - Where has Santa gone, help find them?</p>
+        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the image</button>
       </div>
     );
   }
@@ -125,7 +127,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   if (gameFinished) {
     return (
       <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">An Inspector never forgets their magnifying glass!</p>
+        <p className="text-2xl mb-2 font-bold">Santa has been found!</p>
         <div className="w-1/2 mx-auto mb-2">
           <img className="w-full p-2" src={`/images/${baseFolder}/answers.jpeg`} onClick={onLocationClick} alt="answers" />
         </div>
@@ -150,15 +152,9 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
             checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
           }
         </div>
-        <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
-          <div className="w-full relative cursor-not-allowed">
-            <img className="p-2 absolute inset-0 z-10" src={`/images/${baseFolder}/original.jpeg`} alt="original"/>
-            <img className="p-2 absolute inset-0" src={`/images/${baseFolder}/mask.jpeg`} alt="mask" ref={maskRef} />
-          </div>
-          <div className="cursor-pointer">
-            <img className="w-full p-2" src={`/images/${baseFolder}/hidden.jpeg`} onClick={onLocationClick} alt="guess" />
-            <p className="text-sm text-center italic">Guess Image</p>
-          </div>
+        <div className="relative w-2/3 mx-auto">
+          <img onClick={onLocationClick} className="w-full z-10 cursor-pointer" src={`/images/${baseFolder}/guess.jpeg`} />
+          <img className="absolute inset-0 opacity-0 pointer-events-none" src={`/images/${baseFolder}/mask.jpeg`} ref={maskRef} />
         </div>
         <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
         <p className="text-center">Found {answers.length} / {averages.length}</p>
@@ -168,4 +164,4 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   );
 };
 
-export default SpotTheDiff;
+export default FindSanta;
