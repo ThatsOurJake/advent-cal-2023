@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import prettyMilliseconds from "pretty-ms";
 
 import rng from "@/app/utils/rng";
 import api from "@/app/utils/api";
-import { WordPayload } from "../../api/submit-game/calculate-score/word";
+import type { WordPayload } from "@/app/api/submit-game/calculate-score/word";
 import logger from "@/logger";
 
 export interface WordAnswer {
@@ -94,7 +94,7 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
               setSubmitError(true);
               logger.error(e);
             })
-            .finally(() => setSubmittingScore(false));;
+            .finally(() => setSubmittingScore(false));
 
           }, ANIMATION_DELAY);
         }
@@ -115,7 +115,7 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
   if (gameFinished) {
     return (
       <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Winner!</p>
+        <p className="text-2xl mb-2 font-bold">Final Results:</p>
         <div className="mb-2">
           <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
           { submittingScore && <p>Calculating Score...</p>}

@@ -88,7 +88,9 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
     squad: x.squad,
     points: x.points,
     uuid: x.uuid,
-  })).sort((a, b) => a.points - b.points);
+  }))
+  .filter(x => x.name.toLowerCase() !== 'jake king' && x.squad.toLowerCase() !== 'jp')
+  .sort((a, b) => a.points - b.points);
 };
 
 const addPoints = async (uuid: string, points: number, dayNumber: string) => {

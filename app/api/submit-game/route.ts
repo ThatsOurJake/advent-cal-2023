@@ -75,7 +75,7 @@ export async function POST(req: Request) {
     points = calculator(data.payload);
   }
 
-  if (points > 0) {
+  if (points >= 0) {
     await mongo.addPoints(userId, points, day);
 
     return Response.json({

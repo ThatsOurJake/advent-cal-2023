@@ -1,4 +1,3 @@
-import Link from "next/link";
 import isValid from "@/app/utils/is-valid";
 
 interface CellProps {
@@ -8,11 +7,11 @@ interface CellProps {
 
 const Cell = ({ value, color }: CellProps) => {
   return (
-    <Link href={isValid(parseInt(value, 10)) ? `/day/${value}` : ''}>
+    <a href={isValid(parseInt(value, 10)) ? `/day/${value}` : ''}>
       <div className="aspect-square p-4 cursor-pointer hover:underline">
         <div className={`bg-${color}-200 rounded-md p-2 w-full h-full flex justify-center items-center font-bold text-4xl`}>{value}</div>
       </div>
-  </Link>
+  </a>
   )
 };
 
