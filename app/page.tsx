@@ -72,8 +72,9 @@ export default async function Home() {
             })
           }
         </div>
-        <section className="relative w-full md:w-1/2  mx-auto z-10 p-4 bg-white rounded-md text-center">
+        <section className="relative w-full md:w-1/2 mx-auto p-4 bg-white rounded-md flex gap-x-2 justify-center">
           <Link href="/leaderboard" className="text-blue-500 hover:underline">View the leaderboard!</Link>
+          <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=1WW4aBjPK0uCpKTt25xSN3AWa6bI3CVHiklkahD8SkZURVEyUUdBTTMxT1lSTktDOVZaTjdGSkhVTC4u" className="text-blue-500 hover:underline">Report a bug!</a>
         </section>
         <div className='hidden bg-red-200 bg-green-200 bg-blue-200 bg-orange-200 grid-cols-4 grid-rows-2 text-orange-500 text-gray-500 text-yellow-500 bg-red-50 bg-green-50 bg-blue-50 bg-orange-50 bg-lime-500' />
       </div>
