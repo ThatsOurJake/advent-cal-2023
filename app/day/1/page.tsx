@@ -48,7 +48,7 @@ export default function DayOne() {
   const nonce = generateNonce('1', 'match');
 
   return (
-    <div data-nonce={nonce}>
+    <div>
       <p className="font-bold text-center text-4xl">1st December 2023</p>
       <p className='text-center italic my-2'>Match the pairs the quickest to score points!</p>
       <MatchPairs grid={matchPairsGrid} height={2} width={4} nonce={nonce} />

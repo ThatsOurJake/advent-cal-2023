@@ -8,10 +8,7 @@ import { MatchPayload } from "./calculate-score/match";
 
 interface BasePayload {
   nonce: string;
-}
-
-interface Payload<T> extends BasePayload {
-  payload: T;
+  payload: object;
 }
 
 const TIMEFRAME = 0.5 * 60 * 60 * 1000;
@@ -74,9 +71,8 @@ export async function POST(req: Request) {
   const calculator = CALCULATOR_MAP[game];
   let points = 0;
 
-  if (calculator && game === 'match') {
-    const { payload } = data as Payload<MatchPayload>;
-    points = calculator(payload);
+  if (calculator) {
+    points = calculator(data.payload);
   }
 
   if (points > 0) {

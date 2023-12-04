@@ -1,6 +1,5 @@
-import Image from "next/image";
-import mongo, { ScoreboardUser } from "../services/mongo";
-import getUser from "../utils/get-user";
+import mongo, { ScoreboardUser } from "@/app/services/mongo";
+import getUser from "@/app/utils/get-user";
 
 interface LeaderboardRowProps {
   user: ScoreboardUser;
@@ -25,7 +24,7 @@ const LeaderboardRow = ({ currentUserId, position, user }: LeaderboardRowProps) 
 
   return (
     <div className={`w-full px-4 py-3 border drop-shadow-md flex ${isCurrentUser && 'bg-slate-100'}`}>
-      <Image src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} alt="profile picture" aria-hidden className="rounded-md" />
+      <img src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} alt="profile picture" aria-hidden className="rounded-md" />
       <div className="flex flex-col ml-4 flex-grow py-1 justify-between">
         <p className="text-lg">{user.name} | {user.squad}</p>
         <p>✨ Points: <b>{user.points}</b> ✨</p>
