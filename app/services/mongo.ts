@@ -28,6 +28,8 @@ const connect = async () => {
     return;
   }
 
+  client.on('close', () => (isConnected = false));
+
   await client.connect();
   isConnected = true;
   logger.info("Connected to mongo");

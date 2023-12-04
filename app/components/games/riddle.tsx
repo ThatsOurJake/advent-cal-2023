@@ -20,7 +20,7 @@ interface RiddleWordProps {
 }
 
 const Riddle = ({ riddle, nonce }: RiddleWordProps) => {
-  const [hasStarted, setHasStarted] = useState<boolean>(true);
+  const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [submittingScore, setSubmittingScore] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const Riddle = ({ riddle, nonce }: RiddleWordProps) => {
 
   const startGame = () => {
     setHasStarted(true);
-  }
+  };
 
   const onGuess = (guess: string) => {
     const correct = btoa(guess.toLowerCase()) === riddle.answer;

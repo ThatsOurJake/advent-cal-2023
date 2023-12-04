@@ -20,12 +20,13 @@ interface GuessWordProps {
 
 interface WordBoxProps {
   word: WordAnswer;
+  lock: boolean;
 }
 
-const WordBox = ({ word }: WordBoxProps) => {
+const WordBox = ({ word, lock }: WordBoxProps) => {
   const unhashed = atob(word.answer);
   const missingLetters = word.missingLetters[rng(1, word.missingLetters.length + 1) - 1];
-  const display = unhashed.split('').map((x, index) => missingLetters.includes(index) ? '_' : x);
+  const display = lock ? unhashed : unhashed.split('').map((x, index) => missingLetters.includes(index) ? '_' : x);
 
   return (
     <div className="flex flex-col items-center my-4">
@@ -116,6 +117,11 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
     return (
       <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
         <p className="text-2xl mb-2 font-bold">Final Results:</p>
+        <ul>
+          {
+            words.map((x, index) => (<li key={`word-${index}`}>{atob(x.answer)}</li>))
+          }
+        </ul>
         <div className="mb-2">
           <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
           { submittingScore && <p>Calculating Score...</p>}
@@ -131,7 +137,7 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
   return (
     <div className="my-4">
       {
-        words.map(x => (<WordBox word={x} key={x.answer} />))
+        words.map(x => (<WordBox word={x} key={x.answer} lock={lock.current} />))
       }
       <button onClick={() => checkGuesses()} className="bg-purple-400 py-1 px-3 hover:underline rounded-md block mx-auto">Submit Guesses!</button>
     </div>
