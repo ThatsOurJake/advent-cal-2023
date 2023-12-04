@@ -24,9 +24,9 @@ const LeaderboardRow = ({ currentUserId, position, user }: LeaderboardRowProps) 
 
   return (
     <div className={`w-full px-4 py-3 border drop-shadow-md flex ${isCurrentUser && 'bg-slate-100'}`}>
-      <img src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} alt="profile picture" aria-hidden className="rounded-md" />
-      <div className="flex flex-col ml-4 flex-grow py-1 justify-between">
-        <p className="text-lg">{user.name} | {user.squad}</p>
+      <img src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} style={{ width: '64px', height: '64px' }} alt="profile picture" aria-hidden className="rounded-md" />
+      <div className="flex flex-col ml-4 flex-grow flex-shrink py-1 min-w-0 justify-between">
+        <p className="text-lg truncate">{user.name} | {user.squad}</p>
         <p>✨ Points: <b>{user.points}</b> ✨</p>
       </div>
       <p className={`font-bold text-lg ${positionColour}`}>#{position}</p>
@@ -43,7 +43,7 @@ const Leaderboard = async () => {
   return (
     <main className="relative bg-black min-w-screen min-h-screen">
       <div aria-hidden className="absolute inset-0 h-full w-full bg-cover blur-sm" style={{ backgroundImage: `url('/background.jpg')`}} />
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 h-screen">
+      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen">
         <p className="text-4xl text-center mb-4">Leaderboard!</p>
         <div className="md:w-2/3 mx-auto">
           <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} />

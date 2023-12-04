@@ -17,7 +17,7 @@ const Register = () => {
         className="absolute inset-0 h-full w-full bg-cover blur-sm"
         style={{ backgroundImage: `url('/background.jpg')` }}
       />
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 h-screen">
+      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen">
         <p className="text-center text-4xl">Register!</p>
         {state.error && (
           <div className="text-center px-1 py-2 bg-red-50 border rounded-md my-4 border-red-100 drop-shadow-sm">

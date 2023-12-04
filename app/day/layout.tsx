@@ -31,7 +31,7 @@ export default async function DayLayout({
     <main className="relative bg-black min-w-screen min-h-screen">
       <div aria-hidden className="absolute inset-0 h-full w-full bg-cover blur-sm" style={{ backgroundImage: `url('/background.jpg')`}}>
       </div>
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 h-screen">
+      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen">
         {!isUnlocked && <NotUnlocked />}
         {!alreadyCompleted && isUnlocked && children}
         {alreadyCompleted && <AlreadyCompleted day={parsed.toString()} daysToPoints={user.pointsToDays} />}
