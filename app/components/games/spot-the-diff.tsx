@@ -36,6 +36,8 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
       return;
     }
 
+    lock.current = true;
+
     const calculated = Math.ceil((Date.now() - startTime.current) / 1000);
 
     setSubmittingScore(true);
@@ -53,8 +55,6 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   }, [nonce, answers]);
 
   const screenReaderScore = () => {
-    lock.current = true;
-
     setTimeTaken(0);
     setAnswers(averages);
 
@@ -106,7 +106,6 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
       setCheckmarks([...checkmarks, [rawX - (THRESHOLD * 4), rawY - (THRESHOLD * 4)]]);
 
       if (newAnswers.length === averages.length) {
-        lock.current = true;
         setTimeout(() => finishGame(), DELAY);
       }
     }
