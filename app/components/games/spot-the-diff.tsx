@@ -31,7 +31,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   const lock = useRef<boolean>(false);
   const startTime = useRef<number>(0);
 
-  const finishGame = useCallback(() => {
+  const finishGame = useCallback((correctGuesses: number ) => {
     if (lock.current) {
       return;
     }
@@ -42,7 +42,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
 
     setSubmittingScore(true);
 
-    api.submitGameResult<DiffPayload>(nonce, { timeTaken: calculated, correctGuesses: answers.length })
+    api.submitGameResult<DiffPayload>(nonce, { timeTaken: calculated, correctGuesses })
       .then(s => setFinalScore(s))
       .catch((e) => {
         setSubmitError(true);
@@ -52,13 +52,13 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
 
     setTimeTaken(calculated);
     setGameFinished(true);
-  }, [nonce, answers]);
+  }, [nonce]);
 
   const screenReaderScore = () => {
     setTimeTaken(0);
     setAnswers(averages);
 
-    finishGame();
+    finishGame(averages.length);
   };
 
   const getMousePos = (e: MouseEvent<HTMLImageElement>) => {
@@ -106,7 +106,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
       setCheckmarks([...checkmarks, [rawX - (THRESHOLD * 4), rawY - (THRESHOLD * 4)]]);
 
       if (newAnswers.length === averages.length) {
-        setTimeout(() => finishGame(), DELAY);
+        setTimeout(() => finishGame(newAnswers.length), DELAY);
       }
     }
   }, [answers, averages, checkmarks, finishGame]);
@@ -165,7 +165,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
         </div>
         <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
         <p className="text-center">Found {answers.length} / {averages.length}</p>
-        <button onClick={() => finishGame()} className="bg-purple-400 py-1 px-4 my-2 hover:underline rounded-md mx-auto block">Give up!</button>
+        <button onClick={() => finishGame(answers.length)} className="bg-purple-400 py-1 px-4 my-2 hover:underline rounded-md mx-auto block">Give up!</button>
       </section>
     </div>
   );
