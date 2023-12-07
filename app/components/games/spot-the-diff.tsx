@@ -93,6 +93,8 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     const sum = data?.reduce((acc, current) => acc += current, 0);
     const avg = Math.floor(sum / data.length);
 
+    console.log(avg);
+
     const answer = averages.find(x => {
       const lowerBound = x - THRESHOLD;
       const upperBound = x + THRESHOLD;
@@ -164,6 +166,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
           </div>
         </div>
         <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
+        <p className="italic text-center text-sm">Pinch and zoom on a macbook should zoom in!</p>
         <p className="text-center">Found {answers.length} / {averages.length}</p>
         <button onClick={() => finishGame(answers.length)} className="bg-purple-400 py-1 px-4 my-2 hover:underline rounded-md mx-auto block">Give up!</button>
       </section>
