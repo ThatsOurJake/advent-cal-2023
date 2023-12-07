@@ -8,6 +8,7 @@ const dayGameMap: { [day: string]: string } = {
   7: 'quiz',
   8: 'match',
   9: 'wheel',
+  11: 'wordle',
 };
 
 export default dayGameMap;
