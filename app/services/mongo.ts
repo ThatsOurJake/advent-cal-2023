@@ -86,7 +86,7 @@ const getUser = async (uuid: string): Promise<UserWithScore | null> => {
   return null;
 };
 
-export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'uuid'> & { points: number };
+export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'uuid'> & { points: number, position?: number };
 type ScoreboardDTO = ScoreboardUser[];
 
 const getScoreboard = async (): Promise<ScoreboardDTO> => {
@@ -94,6 +94,7 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
 
   const col = client.db().collection<CreateUserDTO>("users");
   const users = await col.find({}).toArray();
+  let currentPosition = 1;
 
   return users.map(x => ({
     name: x.name,
@@ -102,7 +103,19 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
     uuid: x.uuid,
   }))
   .filter(x => !(x.name.toLowerCase() === 'jake king' && x.squad.toLowerCase() === 'jp'))
-  .sort((a, b) => b.points - a.points);
+  .sort((a, b) => b.points - a.points)
+  .reduce((acc: ScoreboardDTO, current) => {
+    const prev = [...acc].pop();
+
+    if (prev && prev.points !== current.points) {
+      currentPosition++;
+    }
+
+    return [...acc, {
+      ...current,
+      position: currentPosition
+    }];
+  }, []);
 };
 
 const addPoints = async (uuid: string, points: number, dayNumber: string) => {

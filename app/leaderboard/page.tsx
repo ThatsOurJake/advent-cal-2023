@@ -38,7 +38,7 @@ const Leaderboard = async () => {
   const user = await getUser();
   const scoreboard = await mongo.getScoreboard();
 
-  const currentPosition = scoreboard.findIndex(x => x.uuid === user.uuid) + 1;
+  const currentPosition = scoreboard.find(x => x.uuid === user.uuid)?.position || 0;
 
   return (
     <main className="relative bg-black min-w-screen min-h-screen">
@@ -51,7 +51,7 @@ const Leaderboard = async () => {
           <section>
             {
               scoreboard.map((x, index) => (
-                <LeaderboardRow key={x.uuid} currentUserId={user.uuid} user={x} position={index + 1} />
+                <LeaderboardRow key={x.uuid} currentUserId={user.uuid} user={x} position={x.position || 0} />
               ))
             }
           </section>
