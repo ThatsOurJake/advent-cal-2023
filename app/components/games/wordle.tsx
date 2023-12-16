@@ -201,7 +201,7 @@ const Wordle = ({ nonce, wordle }: WordleProps) => {
         <p className="text-2xl mb-2 font-bold">That&apos;s Wordle!</p>
         <div className="mb-2">
           {
-            wasCorrect && <p className="text-green-500">Congrats on guessing the word &quot;{answer};&quot;</p>
+            wasCorrect && <p className="text-green-500">Congrats on guessing the word &quot;{answer}&quot;</p>
           }
           {
             !wasCorrect && <p className="text-red-500">Unlucky the word was &quot;{answer};&quot;</p>
