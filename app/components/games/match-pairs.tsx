@@ -37,7 +37,7 @@ const Card = ({ isFlipped = false, id, onClick, asset }: CardProps) => {
 
 export interface GameCell {
   id: string,
-  asset: 'bauble' | 'came' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath',
+  asset: 'bauble' | 'cane' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath',
   isFlipped: boolean,
 }
 

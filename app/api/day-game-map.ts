@@ -16,6 +16,14 @@ const dayGameMap: { [day: string]: string } = {
   15: 'wheel',
   16: 'find',
   17: 'wordle',
+  18: 'match',
+  19: 'diff',
+  20: 'wordle',
+  21: 'riddle',
+  22: 'wordle',
+  23: 'match',
+  24: 'word',
+  25: 'wheel',
 };
 
 export default dayGameMap;

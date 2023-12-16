@@ -23,15 +23,18 @@ export const wordles: Wordle[] = [
   },
   {
     wordleId: 'wordle-2',
-    answer: 'rudpolph',
-    maxGuesses: 9,
+    answer: 'present',
+    maxGuesses: 8,
+  },
+  {
+    wordleId: 'wordle-3',
+    answer: 'dasher',
+    maxGuesses: 7,
   }
 ];
 
 const calculateWordleScore = ({ attemptsTaken, wordleId, wasCorrect }: WorldePayload): number => {
   const wordle = wordles.find(x => x.wordleId === wordleId);
-
-  console.log(wordleId, wordle);
 
   if (!wordle) {
     return 0;

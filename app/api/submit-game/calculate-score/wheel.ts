@@ -106,6 +106,51 @@ export const wheels: Wheel[] = [
         color: wheelSegmentColours.purple,
       },
     ]
+  },
+  {
+    id: 'wheel-3',
+    options: [
+      {
+        desc: 'Gain 150 points',
+        points: 150,
+        color: wheelSegmentColours.purple,
+      },
+      {
+        desc: 'Gain 100 points',
+        points: 100,
+        color: wheelSegmentColours.red,
+      },
+      {
+        desc: 'Gain 200 points',
+        points: 200,
+        color: wheelSegmentColours.lime,
+      },
+      {
+        desc: 'Gain 150 points',
+        points: 150,
+        color: wheelSegmentColours.purple,
+      },
+      {
+        desc: 'Gain 250 points',
+        points: 250,
+        color: wheelSegmentColours.orange,
+      },
+      {
+        desc: 'Gain 100 points',
+        points: 100,
+        color: wheelSegmentColours.red,
+      },
+      {
+        desc: 'Gain 150 points',
+        points: 150,
+        color: wheelSegmentColours.purple,
+      },
+      {
+        desc: 'Gain 200 points',
+        points: 200,
+        color: wheelSegmentColours.lime,
+      },
+    ]
   }
 ];
 
