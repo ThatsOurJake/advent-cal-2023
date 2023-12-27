@@ -41,6 +41,28 @@ const Leaderboard = async () => {
 
   const currentPosition = scoreboard.find(x => x.uuid === user.uuid)?.position || 0;
 
+  const averagePointsToDays = scoreboard.reduce((acc: { day: string; points: number, count: number }[], current) => {
+    const { pointsToDays } = current;
+    const copy = [...acc];
+
+    pointsToDays.forEach((x) => {
+      const index = copy.findIndex(y => y.day === x.day);
+
+      if (index === -1) {
+        copy.push({ day: x.day, points: x.points, count: 1 });
+        return;
+      }
+
+      copy[index].points += x.points;
+      copy[index].count += 1;
+    });
+
+    return copy;
+  }, []).map(x => ({
+    ...x,
+    points: Math.ceil(x.points / x.count),
+  }));
+
   return (
     <main className="relative bg-black min-w-screen min-h-screen">
       <div aria-hidden className="absolute inset-0 h-full w-full bg-cover blur-sm" style={{ backgroundImage: `url('/background.jpg')`}} />
@@ -49,7 +71,7 @@ const Leaderboard = async () => {
         <div className="md:w-2/3 mx-auto">
           <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} />
           <div className="w-full aspect-video my-4">
-            <ScoreGraph pointsToDays={user.pointsToDays} />
+            <ScoreGraph pointsToDays={user.pointsToDays} averagePointsToDays={averagePointsToDays} />
           </div>
           <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
           <section>

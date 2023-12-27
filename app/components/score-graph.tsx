@@ -26,9 +26,10 @@ ChartJS.register(
 
 interface ScoreGraphProps {
   pointsToDays: { day: string; points: number }[];
+  averagePointsToDays: { day: string; points: number }[];
 }
 
-const ScoreGraph = ({ pointsToDays }: ScoreGraphProps) => {
+const ScoreGraph = ({ pointsToDays, averagePointsToDays }: ScoreGraphProps) => {
   const [loading, setLoading] = useState(true);
 
   const options: ChartOptions<'line'> = {
@@ -56,6 +57,12 @@ const ScoreGraph = ({ pointsToDays }: ScoreGraphProps) => {
         data: pointsToDays.map((x) => x.points),
         borderColor: '#f57c00',
         backgroundColor: '#f57c00',
+      },
+      {
+        label: 'Average Points',
+        data: averagePointsToDays.map((x) => x.points),
+        borderColor: '#b2dfdb',
+        backgroundColor: '#b2dfdb',
       }
     ]
   };

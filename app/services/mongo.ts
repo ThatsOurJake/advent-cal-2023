@@ -79,6 +79,7 @@ const getUser = async (uuid: string): Promise<UserWithScore | null> => {
   if (obj) {
     return {
       ...obj,
+      pointsToDays: obj.pointsToDays.sort((a, b) => parseInt(a.day) - parseInt(b.day)),
       points: sumArray(obj.pointsToDays.map(x => x.points)),
     }
   }
@@ -86,7 +87,7 @@ const getUser = async (uuid: string): Promise<UserWithScore | null> => {
   return null;
 };
 
-export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'uuid'> & { points: number, position?: number };
+export type ScoreboardUser = Pick<CreateUserDTO, 'name' | 'squad' | 'uuid' | 'pointsToDays'> & { points: number, position?: number };
 type ScoreboardDTO = ScoreboardUser[];
 
 const getScoreboard = async (): Promise<ScoreboardDTO> => {
@@ -101,6 +102,7 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
     squad: x.squad,
     points: sumArray(x.pointsToDays.map(x => x.points)),
     uuid: x.uuid,
+    pointsToDays: x.pointsToDays.sort((a, b) => parseInt(a.day) - parseInt(b.day))
   }))
   .filter(x => !(x.name.toLowerCase() === 'jake king' && x.squad.toLowerCase() === 'jp'))
   .sort((a, b) => b.points - a.points)
