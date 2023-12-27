@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Cell, { type CellProps } from '@/app/components/cell';
 import getUser from './utils/get-user';
+import HomeBanner from './components/home-banner';
 
 const calendar: Pick<CellProps, 'color' | 'value'>[] = [
   { color: 'blue', value: '2' },
@@ -64,6 +65,9 @@ export default async function Home() {
           <p className="mt-4 text-center">Welcome {user.name} from {user.squad}!</p>
           <p className='text-center'>✨ Current Points: <b>{user.points || '0'}</b> ✨</p>
         </section>
+        <div className='relative w-full md:w-2/3 mx-auto z-10'>
+          <HomeBanner />
+        </div>
         <div className="relative w-full md:w-2/3 z-10 mx-auto grid grid-cols-5 grid-rows-5 my-2">
           {
             calendar.map((x) => {

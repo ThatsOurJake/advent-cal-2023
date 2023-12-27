@@ -13,8 +13,6 @@ const calculateQuizScore = ({ answers }: QuizPayload): number => {
   return sumArray(answers.map(x => {
     const { timeTaken, wasCorrect } = x;
 
-    console.log(x);
-
     if (!wasCorrect) {
       return 0;
     }

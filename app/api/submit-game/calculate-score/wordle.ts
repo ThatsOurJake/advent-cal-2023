@@ -46,7 +46,10 @@ const calculateWordleScore = ({ attemptsTaken, wordleId, wasCorrect }: WorldePay
     return 0;
   }
 
-  return (answer.length * 10) + (120 - (attemptsTaken * 20))
+  const attemptsMultiplier = 20;
+  const wordLengthMultiplier = 10;
+
+  return (answer.length * wordLengthMultiplier) + ((maxGuesses * attemptsMultiplier) - (attemptsTaken * attemptsMultiplier))
 };
 
 export default calculateWordleScore;

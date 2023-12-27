@@ -1,5 +1,6 @@
 import mongo, { ScoreboardUser } from "@/app/services/mongo";
 import getUser from "@/app/utils/get-user";
+import ScoreGraph from "../components/score-graph";
 
 interface LeaderboardRowProps {
   user: ScoreboardUser;
@@ -47,6 +48,9 @@ const Leaderboard = async () => {
         <p className="text-4xl text-center mb-4">Leaderboard!</p>
         <div className="md:w-2/3 mx-auto">
           <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} />
+          <div className="w-full aspect-video my-4">
+            <ScoreGraph pointsToDays={user.pointsToDays} />
+          </div>
           <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
           <section>
             {
