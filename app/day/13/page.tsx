@@ -5,7 +5,7 @@ import Riddle, { type RiddleDIO } from '@/app/components/games/riddle';
 
 const ridd: RiddleDIO = {
   answer: 'Y2hyaXN0bWFzIGNhbmRsZQ==',
-  options: shuffleArray(['Christmas Yule Log', 'Christmas Stocking', 'Christmas Candle', 'Candy-Cane']),
+  options: shuffleArray(['Christmas Yule Log', 'Christmas Stocking', 'Christmas Candle', 'Christmas Wreath']),
   question: 'I am tall when I am young, and I am short when I am old. What am I?'
 };
 
