@@ -24,7 +24,7 @@ const LeaderboardRow = ({ currentUserId, position, user }: LeaderboardRowProps) 
   }
 
   return (
-    <div className={`w-full px-4 py-3 border drop-shadow-md flex ${isCurrentUser && 'bg-slate-100'}`}>
+    <div className={`w-full px-4 py-3 my-2 border drop-shadow-md rounded-md flex ${isCurrentUser && 'bg-slate-100'}`}>
       <img src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} style={{ width: '64px', height: '64px' }} alt="profile picture" aria-hidden className="rounded-md" />
       <div className="flex flex-col ml-4 flex-grow flex-shrink py-1 min-w-0 justify-between">
         <p className="text-lg truncate">{user.name} | {user.squad}</p>
@@ -70,7 +70,7 @@ const Leaderboard = async () => {
         <p className="text-4xl text-center mb-4">Leaderboard!</p>
         <div className="md:w-2/3 mx-auto">
           <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} />
-          <div className="w-full aspect-video my-4">
+          <div className="w-full aspect-video mt-4">
             <ScoreGraph pointsToDays={user.pointsToDays} averagePointsToDays={averagePointsToDays} />
           </div>
           <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
