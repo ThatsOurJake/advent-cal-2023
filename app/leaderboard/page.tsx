@@ -1,39 +1,8 @@
-import mongo, { ScoreboardUser } from "@/app/services/mongo";
+import mongo from "@/app/services/mongo";
 import getUser from "@/app/utils/get-user";
 import ScoreGraph from "../components/score-graph";
-
-interface LeaderboardRowProps {
-  user: ScoreboardUser;
-  position: number;
-  currentUserId: string;
-}
-
-const toBase64 = (str: string) => Buffer.from(str, 'utf-8').toString('base64');
-
-const LeaderboardRow = ({ currentUserId, position, user }: LeaderboardRowProps) => {
-  const isCurrentUser = currentUserId === user.uuid;
-  
-  let positionColour = '';
-
-  if (position === 1) {
-    positionColour = 'text-yellow-500';
-  } else if (position === 2) {
-    positionColour = 'text-gray-500'
-  } else if (position === 3) {
-    positionColour = 'text-orange-500'
-  }
-
-  return (
-    <div className={`w-full px-4 py-3 my-2 border drop-shadow-md rounded-md flex ${isCurrentUser && 'bg-slate-100'}`}>
-      <img src={`https://api.dicebear.com/7.x/thumbs/png?seed=${toBase64(user.uuid)}`} width={64} height={64} style={{ width: '64px', height: '64px' }} alt="profile picture" aria-hidden className="rounded-md" />
-      <div className="flex flex-col ml-4 flex-grow flex-shrink py-1 min-w-0 justify-between">
-        <p className="text-lg truncate">{user.name} | {user.squad}</p>
-        <p>✨ Points: <b>{user.points}</b> ✨</p>
-      </div>
-      <p className={`font-bold text-lg ${positionColour}`}>#{position}</p>
-    </div>
-  )
-};
+import averagePointsCalculation from "../utils/average-points-calculation";
+import LeaderboardRow from "../components/leaderboard-row";
 
 const Leaderboard = async () => {
   const user = await getUser();
@@ -41,27 +10,7 @@ const Leaderboard = async () => {
 
   const currentPosition = scoreboard.find(x => x.uuid === user.uuid)?.position || 0;
 
-  const averagePointsToDays = scoreboard.reduce((acc: { day: string; points: number, count: number }[], current) => {
-    const { pointsToDays } = current;
-    const copy = [...acc];
-
-    pointsToDays.forEach((x) => {
-      const index = copy.findIndex(y => y.day === x.day);
-
-      if (index === -1) {
-        copy.push({ day: x.day, points: x.points, count: 1 });
-        return;
-      }
-
-      copy[index].points += x.points;
-      copy[index].count += 1;
-    });
-
-    return copy;
-  }, []).map(x => ({
-    ...x,
-    points: Math.ceil(x.points / x.count),
-  }));
+  const averagePointsToDays = averagePointsCalculation(scoreboard);
 
   return (
     <main className="relative bg-black min-w-screen min-h-screen">
@@ -76,7 +25,7 @@ const Leaderboard = async () => {
           <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
           <section>
             {
-              scoreboard.map((x, index) => (
+              scoreboard.map((x) => (
                 <LeaderboardRow key={x.uuid} currentUserId={user.uuid} user={x} position={x.position || 0} />
               ))
             }

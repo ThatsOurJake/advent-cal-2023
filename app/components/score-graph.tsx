@@ -11,8 +11,10 @@ import {
   Tooltip,
   Legend,
   type ChartOptions,
+  ChartData,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import getPositionColour from '../utils/get-position-colour';
 
 ChartJS.register(
   CategoryScale,
@@ -25,11 +27,19 @@ ChartJS.register(
 );
 
 interface ScoreGraphProps {
-  pointsToDays: { day: string; points: number }[];
-  averagePointsToDays: { day: string; points: number }[];
+  pointsToDays?: { day: string; points: number }[];
+  averagePointsToDays?: { day: string; points: number }[];
+  otherUsers?: { name: string; points: { day: string; points: number }[] }[];
 }
 
-const ScoreGraph = ({ pointsToDays, averagePointsToDays }: ScoreGraphProps) => {
+const defaultProps: ScoreGraphProps = {
+  pointsToDays: [],
+  averagePointsToDays: [],
+  otherUsers: [],
+};
+
+const ScoreGraph = (props: ScoreGraphProps) => {
+  const { averagePointsToDays, pointsToDays, otherUsers } = { ...defaultProps, ...props } as Required<ScoreGraphProps>;
   const [loading, setLoading] = useState(true);
 
   const options: ChartOptions<'line'> = {
@@ -49,23 +59,37 @@ const ScoreGraph = ({ pointsToDays, averagePointsToDays }: ScoreGraphProps) => {
     }
   };
 
-  const data = {
+  const data: ChartData<"line"> = {
     labels: pointsToDays.map((x) => `Day ${x.day}`),
-    datasets: [
-      {
-        label: 'Points',
-        data: pointsToDays.map((x) => x.points),
-        borderColor: '#f57c00',
-        backgroundColor: '#f57c00',
-      },
-      {
-        label: 'Average Points',
-        data: averagePointsToDays.map((x) => x.points),
-        borderColor: '#b2dfdb',
-        backgroundColor: '#b2dfdb',
-      }
-    ]
+    datasets: []
   };
+
+  if (pointsToDays.length > 0) {
+    data.datasets.push({
+      label: 'Your Points',
+      data: pointsToDays.map((x) => x.points),
+      borderColor: '#f57c00',
+      backgroundColor: '#f57c00',
+    });
+  };
+
+  if (averagePointsToDays.length > 0) {
+    data.datasets.push({
+      label: 'Average Points',
+      data: averagePointsToDays.map((x) => x.points),
+      borderColor: '#b2dfdb',
+      backgroundColor: '#b2dfdb',
+    });
+  };
+
+  if (otherUsers.length > 0) {
+    data.datasets.push(...otherUsers.map((x, i) => ({
+      label: x.name,
+      data: x.points.map((y) => y.points),
+      borderColor: getPositionColour(i + 1, true),
+      backgroundColor: getPositionColour(i + 1, true),
+    })));
+  }
 
   return (
     <>
