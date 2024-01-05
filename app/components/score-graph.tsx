@@ -68,8 +68,8 @@ const ScoreGraph = (props: ScoreGraphProps) => {
     data.datasets.push({
       label: 'Your Points',
       data: pointsToDays.map((x) => x.points),
-      borderColor: '#f57c00',
-      backgroundColor: '#f57c00',
+      borderColor: '#f06292',
+      backgroundColor: '#f06292',
     });
   };
 
