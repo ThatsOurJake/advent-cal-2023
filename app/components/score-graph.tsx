@@ -29,7 +29,7 @@ ChartJS.register(
 interface ScoreGraphProps {
   pointsToDays?: { day: string; points: number }[];
   averagePointsToDays?: { day: string; points: number }[];
-  otherUsers?: { name: string; points: { day: string; points: number }[] }[];
+  otherUsers?: { name: string; position: number; points: { day: string; points: number }[] }[];
 }
 
 const defaultProps: ScoreGraphProps = {
@@ -86,8 +86,8 @@ const ScoreGraph = (props: ScoreGraphProps) => {
     data.datasets.push(...otherUsers.map((x, i) => ({
       label: x.name,
       data: x.points.map((y) => y.points),
-      borderColor: getPositionColour(i + 1, true),
-      backgroundColor: getPositionColour(i + 1, true),
+      borderColor: getPositionColour(x.position, true),
+      backgroundColor: getPositionColour(x.position, true),
     })));
   }
 

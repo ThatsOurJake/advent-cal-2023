@@ -14,9 +14,8 @@ export default async function Home() {
   const averagePointsToDays = averagePointsCalculation(scoreboard);
   const currentPosition = scoreboard.find(x => x.uuid === user.uuid)?.position || 0;
 
-  const topThree = scoreboard.slice(0, 3);
-
-  const topThreePoints = topThree.map((x) => ({ name: x.name, points: x.pointsToDays }));
+  const topThree = scoreboard.filter(x => x.position && x.position <= 3).sort((a, b) => a.position! - b.position!);
+  const topThreePoints = topThree.map((x) => ({ name: x.name, position: x.position!, points: x.pointsToDays }));
   
   return (
     <main className="relative bg-black min-w-screen min-h-screen">
