@@ -7,7 +7,7 @@ import Link from "next/link";
 import { registerUser } from "./actions";
 import SubmitBtn from "@/app/components/submit-btn";
 
-const Register = () => {
+const RegistrationOpen = () => {
   const [state, formAction] = useFormState(registerUser, {});
 
   return (
@@ -66,4 +66,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegistrationOpen;

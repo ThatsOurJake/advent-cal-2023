@@ -5,7 +5,7 @@ import './globals.css'
 const inter = Quicksand({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Advent Calendar 2023',
+  title: 'Advent Calendar 2024',
   description: 'Woo - Christmas',
 }
 

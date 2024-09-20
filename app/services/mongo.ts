@@ -45,8 +45,7 @@ interface CreateUserDTO {
   name: string;
   squad: string;
   uuid: string;
-  daysComplete: string[];
-  pointsToDays: { day: string; points: number }[];
+  preCalculatedDiceRolls: number[];
 }
 
 const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
@@ -57,8 +56,6 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
     name: data.name,
     squad: data.squad,
     uuid: crypto.randomUUID(),
-    daysComplete: [],
-    pointsToDays: [],
   };
 
   await col.insertOne(obj);
@@ -70,18 +67,14 @@ interface UserWithScore extends CreateUserDTO {
   points: number;
 }
 
-const getUser = async (uuid: string): Promise<UserWithScore | null> => {
+const getUser = async (uuid: string): Promise<CreateUserDIO | null> => {
   await connect();
 
   const col = client.db().collection<CreateUserDTO>("users");
   const obj = await col.findOne({ uuid });
 
   if (obj) {
-    return {
-      ...obj,
-      pointsToDays: obj.pointsToDays.sort((a, b) => parseInt(a.day) - parseInt(b.day)),
-      points: sumArray(obj.pointsToDays.map(x => x.points)),
-    }
+    return obj;
   }
 
   return null;
