@@ -2,10 +2,10 @@ import Link from "next/link";
 
 interface AlreadyCompletedProps {
   daysToPoints: {
-    day: string;
+    day: number;
     points: number;
   }[];
-  day: string;
+  day: number;
 }
 
 const AlreadyCompleted = ({ daysToPoints, day }: AlreadyCompletedProps) => {

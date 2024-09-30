@@ -7,6 +7,7 @@ import prettyMilliseconds from "pretty-ms";
 import api from "@/app/utils/api";
 import type { MatchPayload } from "@/app/api/submit-game/calculate-score/match";
 import logger from "@/logger";
+import Btn from "../btn";
 
 interface CardProps {
   isFlipped?: boolean;
@@ -149,7 +150,7 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
         <p className="text-center text-lg mb-2">Match <b>{grid.length / 2}</b> Pairs</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Play!</button>
+        <Btn onClick={() => startGame()}>Play!</Btn>
       </div>
     );
   }
