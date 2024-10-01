@@ -45,6 +45,7 @@ interface CreateUserDTO {
   name: string;
   squad: string;
   uuid: string;
+  isMe: boolean;
   pointsToDays: { day: number; points: number }[];
 }
 
@@ -57,6 +58,7 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
     squad: data.squad,
     uuid: crypto.randomUUID(),
     pointsToDays: [],
+    isMe: false,
   };
 
   await col.insertOne(obj);
@@ -102,9 +104,10 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
     squad: x.squad,
     points: sumArray(x.pointsToDays.map(x => x.points)),
     uuid: x.uuid,
-    pointsToDays: x.pointsToDays.sort((a, b) => a.day - b.day)
+    pointsToDays: x.pointsToDays.sort((a, b) => a.day - b.day),
+    isMe: x.isMe,
   }))
-  .filter(x => !(x.name.toLowerCase() === 'jake king' && x.squad.toLowerCase() === 'jp'))
+  .filter(x => !x.isMe)
   .sort((a, b) => b.points - a.points)
   .reduce((acc: ScoreboardDTO, current) => {
     const prev = [...acc].pop();

@@ -36,7 +36,7 @@ const config: Config = {
         base: '5px'
       },
       boxShadow: {
-        light: '4px 4px 0px 0px #000',
+        light: '4px 4px 0px 0px #fff',
         dark: '4px 4px 0px 0px #000',
       },
       translate: {

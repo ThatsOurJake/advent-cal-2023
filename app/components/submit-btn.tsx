@@ -1,4 +1,5 @@
 import { useFormStatus } from "react-dom";
+import Btn from "./btn";
 
 interface SubmitBtnProps {
   text: string;
@@ -11,14 +12,14 @@ const SubmitBtn = ({ text, textSubmitting }: SubmitBtnProps) => {
   const submittingText = textSubmitting || text;
 
   return (
-    <button type="submit" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2" disabled={pending} aria-disabled={pending}>
+    <Btn type="submit" disabled={pending} aria-disabled={pending} className="w-1/2">
       {
         pending && submittingText
       }
       {
         !pending && text
       }
-    </button>
+    </Btn>
   )
 };
 

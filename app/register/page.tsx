@@ -9,13 +9,7 @@ const Register = () => {
 
   const registrationOpen = day <= cutoffDay;
 
-  return (
-    <main className="relative bg-black min-w-screen min-h-screen">
-      {
-        registrationOpen ? (<RegistrationOpen />) : (<RegistrationClosed />)
-      }
-    </main>
-  );
+  return registrationOpen ? (<RegistrationOpen />) : (<RegistrationClosed />);
 };
 
 export default Register;
