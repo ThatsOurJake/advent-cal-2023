@@ -40,9 +40,9 @@ export default function RootLayout({
           </div>
           <div className="py-2 z-10 relative w-full md:w-2/3 mx-auto p-4 min-h-screen">
             <Link href="/">
-              <img src="/header.png" className="w-2/5 mx-auto my-4" />
+              <img src="/header.png" className="w-2/5 lg:w-1/5 mx-auto my-4" />
             </Link>
-            <img src="/divider.png" className="w-1/2 mx-auto my-4" />
+            <img src="/divider.png" className="w-1/2 lg:w-1/3 mx-auto my-4" />
             <section className="text-white">{children}</section>
           </div>
         </main>

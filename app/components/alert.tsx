@@ -2,13 +2,14 @@ import React from "react";
 
 interface AlertProps {
   children: React.ReactNode | React.ReactNode[];
-  type: 'error' | 'success' | 'warning';
+  type: 'error' | 'success' | 'warning' | 'info';
 };
 
 const typeClasses = {
   error: 'bg-red-200',
   success: 'bg-green-200',
   warning: 'bg-yellow-200',
+  info: 'bg-blue-200',
 };
 
 const baseClasses = [

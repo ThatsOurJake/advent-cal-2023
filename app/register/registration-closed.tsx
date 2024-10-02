@@ -1,17 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import Alert from "../components/alert";
 
 const RegistrationClosed = () => {
   return (
-    <main className="relative bg-black min-w-screen min-h-screen">
-      <div aria-hidden className="absolute inset-0 h-full w-full bg-cover" style={{ backgroundImage: `url('/background.png')`}} />
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen text-center">
-        <p className="text-4xl mb-6">Register!</p>
-        <p className="italic">Registrations are now closed.</p>
-        <Link href="/login" className="text-blue-500 hover:underline">Login!</Link>
+    <>
+      <p className="text-center text-2xl font-bold">Registration</p>
+      <div className="w-1/2 mx-auto">
+        <Alert type="warning">
+          <p className="font-bold">Registrations are now closed.</p>
+          <p>If you have an account login using the link below!</p>
+          <Link href="/login" className="text-blue-500 hover:underline">Login!</Link>
+        </Alert>
       </div>
-    </main>
+    </>
   );
 };
 
