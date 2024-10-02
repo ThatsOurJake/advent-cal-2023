@@ -2,7 +2,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 export default function isValid(value: number) {
   if (!isDevelopment) {
-    return new Date(2023, 11, value).valueOf() <= Date.now()
+    const date = new Date(2024, 11, value);
+    return Date.now() >= date.valueOf();
   }
 
   return true;

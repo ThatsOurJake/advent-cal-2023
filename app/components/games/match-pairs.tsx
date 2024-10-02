@@ -8,6 +8,7 @@ import api from "@/app/utils/api";
 import type { MatchPayload } from "@/app/api/submit-game/calculate-score/match";
 import logger from "@/logger";
 import Btn from "../btn";
+import Alert from "../alert";
 
 interface CardProps {
   isFlipped?: boolean;
@@ -21,13 +22,12 @@ const Card = ({ isFlipped = false, id, onClick, asset }: CardProps) => {
     <div className="w-full p-2 aspect-card" id="match-card" data-state={`${isFlipped && 'active'}`} onClick={() => onClick(id)}>
       <div className="match-card-content">
         <div className="match-card-front">
-          <div className="bg-indigo-300 rounded-md cursor-pointer border-4 border-indigo-200 flex items-center justify-center flex-col h-full">
-            <p className="font-bold text-xl"><span className="text-red-500">J</span><span className="text-green-500">D</span></p>
-            <p className="font-bold text-xl">Advent</p>
+          <div className="bg-main rounded-md cursor-pointer border-4 border-black flex items-center justify-center flex-col h-full">
+            <img src="/header.png" className="w-2/3" />
           </div>
         </div>
         <div className="match-card-back">
-          <div className="bg-indigo-100 rounded-md border-4 border-indigo-200 h-full flex justify-center items-center">
+          <div className="bg-main rounded-md border-4 border-black h-full flex justify-center items-center">
             <img src={`/icons/${asset}.png`} className="w-1/2" />
           </div>
         </div>
@@ -157,17 +157,19 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Winner!</p>
-        <div className="mb-2">
-          <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="success">
+        <p className="text-2xl font-bold">Winner!</p>
+        <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="my-2">
+          <a href="/">
+            <Btn className="w-1/3">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 

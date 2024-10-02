@@ -140,7 +140,7 @@ const addPoints = async (uuid: string, points: number, dayNumber: number) => {
     return;
   }
 
-  await col.findOneAndUpdate({ uuid }, { $push: { daysComplete: dayNumber, pointsToDays: { day: dayNumber, points} } });
+  await col.findOneAndUpdate({ uuid }, { $push: { pointsToDays: { day: dayNumber, points} } });
 }
 
 const mongo = {

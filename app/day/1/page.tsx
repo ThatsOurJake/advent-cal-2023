@@ -41,7 +41,7 @@ export default function DayOne() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">1st December 2023</p>
+      <p className="font-bold text-center text-2xl">1st December 2024</p>
       <p className='text-center italic my-2'>Match the pairs the quickest to score points!</p>
       <MatchPairs grid={matchPairsGrid.map(x => ({ ...x, isFlipped: false }))} height={2} width={4} nonce={nonce} />
     </div>

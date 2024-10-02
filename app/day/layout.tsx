@@ -28,13 +28,10 @@ export default async function DayLayout({
   const isUnlocked = isValid(parsed);
 
   return (
-    <main className="relative bg-black min-w-screen min-h-screen">
-      <div aria-hidden className="absolute inset-0 h-full w-full bg-cover" style={{ backgroundImage: `url('/background.png')`}} />
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen">
-        {!isUnlocked && <NotUnlocked />}
-        {!alreadyCompleted && isUnlocked && children}
-        {alreadyCompleted && <AlreadyCompleted day={parsed} daysToPoints={user.pointsToDays} />}
-      </div>
-    </main>
+    <>
+      {!isUnlocked && <NotUnlocked />}
+      {!alreadyCompleted && isUnlocked && children}
+      {alreadyCompleted && <AlreadyCompleted day={parsed} daysToPoints={user.pointsToDays} />}
+    </>  
   );
 }
