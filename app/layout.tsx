@@ -45,6 +45,10 @@ export default function RootLayout({
             <img src="/divider.png" className="w-1/2 lg:w-1/3 mx-auto my-4" />
             <section className="text-white">{children}</section>
           </div>
+          <footer className="w-1/2 bg-white mx-auto relative px-4 py-2 rounded-t-base border-black border-x-2 border-t-2 justify-evenly flex">
+            <Link href="/leaderboard" className="text-blue-500 hover:underline">Check the leaderboard 📈</Link>
+            <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=1WW4aBjPK0uCpKTt25xSN3AWa6bI3CVHiklkahD8SkZURVEyUUdBTTMxT1lSTktDOVZaTjdGSkhVTC4u" className="text-blue-500 hover:underline" target="_blank">Report a bug!</a>
+        </footer>
         </main>
       </body>
     </html>

@@ -32,8 +32,3 @@
 .match-card-back {
   transform: rotateY(180deg);
 }
-
-.triangle-clip {
-  clip-path: polygon(0 100%, 100% 100%, 0 0);
-  transform: rotate(-90deg)
-}

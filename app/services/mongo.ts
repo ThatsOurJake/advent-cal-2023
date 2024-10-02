@@ -123,6 +123,11 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
   }, []);
 };
 
+const getUserScoreboardPosition = async (uuid: string) => {
+  const scoreboard = await getScoreboard();
+  return scoreboard.find(x => x.uuid === uuid)?.position || 0;
+}
+
 const addPoints = async (uuid: string, points: number, dayNumber: number) => {
   await connect();
 
@@ -143,6 +148,7 @@ const mongo = {
   getUser,
   getScoreboard,
   addPoints,
+  getUserScoreboardPosition,
 };
 
 export default mongo;

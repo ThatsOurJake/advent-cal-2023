@@ -1,24 +1,44 @@
 'use server';
 
 import Link from 'next/link';
-import getUser from './utils/get-user';
 import classNames from 'classnames';
+
+import getUser from './utils/get-user';
+import mongo from './services/mongo';
+import suffixOrdinalString from './utils/ordinal-str';
 
 export default async function HomeOpen() {
   const user = await getUser();
+  const position = await mongo.getUserScoreboardPosition(user.uuid);
+
+  const positionStr = suffixOrdinalString(position);
 
   return (
-    <main className="relative bg-black min-w-screen min-h-screen">
-      <div aria-hidden className="absolute inset-0 h-full w-full bg-cover" style={{ backgroundImage: `url('/background.png')`}} />
-      <div className='py-2'>
-        <section className='relative w-1/2 mx-auto border-2 rounded-md border-black drop-shadow-lg py-4 px-2 bg-main shadow-light space-y-2'>
-          <p className='text-center font-heading text-4xl'>Advent Calendar 2024</p>
-          <p className='text-center font-base text-xl'>Welcome, {user.name} from &quot;{user.squad}&quot;!</p>
-          <p className='text-center font-base text-lg'>You have {user.points} points.</p>
-        </section>
+    <>
+      <div className='flex flex-row gap-x-2 justify-center'>
+        <div>
+          <p className='font-bold text-lg'>{user.name} - {user.squad}</p>
+        </div>
+        <span>•</span>
+        <div>
+          <p className='font-bold text-lg'>{user.points} Points ✨</p>
+        </div>
+        <span>•</span>
+        <div>
+          {
+            position > 0 && (
+              <p className='font-bold text-lg'>{positionStr} Place</p>
+            )
+          }
+          {
+            position === 0 && (
+              <p className='font-bold text-lg'>Not Ranked</p>
+            )
+          }
+        </div>
       </div>
-      <div className='w-4/5 mx-auto'>
-        <div className='grid grid-cols-5 w-2/3 mx-auto'>
+      <div className='w-4/5 mx-auto my-2'>
+        <div className='grid grid-cols-5 w-full'>
           {
             Array(25).fill(() => null).map((_, i) => {
               const day = i + 1;
@@ -40,6 +60,6 @@ export default async function HomeOpen() {
           }
         </div>
       </div>
-    </main>
+    </>
   )
 }
