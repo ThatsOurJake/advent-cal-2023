@@ -17,7 +17,7 @@ const LeaderboardRow = ({ currentUserId, position, user }: LeaderboardRowProps) 
   const positionColour = getPositionColour(position);
 
   const classes = classNames('w-full px-4 py-3 border-2 border-black rounded-base shadow-light flex text-black', {
-    'bg-orange-100': isCurrentUser,
+    'bg-indigo-100': isCurrentUser,
     'bg-white': !isCurrentUser,
   });
 

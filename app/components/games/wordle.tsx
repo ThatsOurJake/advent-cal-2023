@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Wordle, WorldePayload } from "@/app/api/submit-game/calculate-score/wordle";
 import logger from "../../../logger";
 import api from "../../utils/api";
+import Btn from "../btn";
+import Alert from "../alert";
 
 interface WordleProps {
   nonce: string;
@@ -24,17 +26,46 @@ interface WordleKeyProps extends WordleSquareProps {
 }
 
 const states = {
-  NEUTRAL: 'bg-slate-200',
-  CORRECT: 'bg-lime-200',
-  IN_WORD: 'bg-orange-200',
-  USED: 'bg-slate-400'
+  NEUTRAL: 'bg-main',
+  CORRECT: 'bg-green-400',
+  IN_WORD: 'bg-orange-400',
+  USED: 'bg-mainAccent'
 };
 
 const DELAY = 750;
 
-const WordleSquare = ({ data: { letter, state } }: WordleSquareProps) => (<div className={`basis-0 grow shrink aspect-square rounded-md ${states[state]} flex justify-center items-center uppercase font-bold`}><p>{letter}</p></div>);
+const baseClasses = [
+  'basis-0',
+  'grow',
+  'shrink',
+  'aspect-square',
+  'flex',
+  'justify-center',
+  'items-center',
+  'uppercase',
+  'font-bold',
+  'rounded-base',
+  'select-none',
+  'shadow-light',
+  'border-2',
+  'border-black',
+]
 
-const KeyboardSquare = ({ data: { letter, state }, onClick }: WordleKeyProps) => (<div onClick={() => onClick(letter)} className={`basis-0 grow shrink aspect-square rounded-md ${states[state]} flex justify-center items-center uppercase font-bold cursor-pointer`}><p>{letter}</p></div>);
+const createClasses = (classes: string[]) => [...baseClasses, ...classes].join(' ');
+
+const WordleSquare = ({ data: { letter, state } }: WordleSquareProps) => (<div className={createClasses([
+  states[state],
+  'text-2xl',
+])}><p>{letter}</p></div>);
+
+const KeyboardSquare = ({ data: { letter, state }, onClick }: WordleKeyProps) => (<div onClick={() => onClick(letter)} className={createClasses([
+  states[state],
+  'cursor-pointer',
+  'transition-all',
+  'hover:shadow-none',
+  'hover:translate-x-boxShadowX',
+  'hover:translate-y-boxShadowY'
+])}><p>{letter}</p></div>);
 
 const genBlankArray = (wordLength: number): LetterState[] => Array(wordLength).fill({}).map(x => ({ letter: '', state: 'NEUTRAL' }));
 
@@ -190,29 +221,31 @@ const Wordle = ({ nonce, wordle }: WordleProps) => {
         <p className="text-center text-lg mb-2">Can you guess the {wordLength} letter word in {maxGuesses} guesses or less?</p>
         <p className="text-center text-base mb-2">Unsure how to play Wordle, check <a target="_blank" className="text-blue-500 hover:underline" href="https://mashable.com/article/wordle-word-game-what-is-it-explained">this article.</a></p>
         <p className="text-center text-base mb-2">The word will be related to Christmas - Today&apos;s Wordle will most likely not help</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Lets go!</button>
+        <Btn onClick={() => startGame()}>Lets go!</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">That&apos;s Wordle!</p>
-        <div className="mb-2">
-          {
-            wasCorrect && <p className="text-green-500">Congrats on guessing the word &quot;{answer}&quot;</p>
-          }
-          {
-            !wasCorrect && <p className="text-red-500">Unlucky the word was &quot;{answer};&quot;</p>
-          }
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore >= 0 && <p>You have earned <b>{finalScore}</b> points!</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="info">
+        <p className="text-2xl font-bold">Wordle Result!</p>
+        {
+          wasCorrect && <p className="text-green-700">Congrats on guessing the word <b>&quot;{answer}&quot;</b></p>
+        }
+        {
+          !wasCorrect && <p className="text-red-700">Unlucky the word was <b>&quot;{answer}&quot;</b></p>
+        }
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && finalScore >= 0 && <p>You have earned <b>{finalScore}</b> points!</p>}
+        { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 

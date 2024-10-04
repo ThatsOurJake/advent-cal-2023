@@ -6,6 +6,8 @@ import prettyMilliseconds from "pretty-ms";
 import type { Answer, QuizPayload } from "@/app/api/submit-game/calculate-score/quiz";
 import api from "@/app/utils/api";
 import logger from "@/logger";
+import Btn from "../btn";
+import Alert from "../alert";
 
 export interface Question {
   question: string;
@@ -73,50 +75,54 @@ const Quiz = ({ nonce, questions }: QuizProps) => {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
         <p className="text-center text-lg mb-2">Can you answer the following <b>{questions.length}</b> questions correctly?</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">I will give it a go!</button>
+        <Btn onClick={() => startGame()}>I will give it a go!</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Quiz Master Flash!</p>
-        <div className="mb-2">
-          <p>Results:</p>
-          <ul>
-            {
-              guesses.map((x, index) => (
-                <li key={`guess-${index}`} className="py-2 px-3">
-                  <p className={`${x.wasCorrect ? 'text-green-500' : 'text-red-500'}`}>{questions[index].question}</p>
-                  {
-                    x.wasCorrect && <p>Answered correctly in {prettyMilliseconds(x.timeTaken * 1000, { verbose: true })}</p>
-                  }
-                  {
-                    !x.wasCorrect && <p>Correct answer: {atob(questions[index].answer)}</p>
-                  }
-                </li>
-              ))
-            }
-          </ul>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="info">
+        <p className="text-2xl mb-1 font-bold">Quiz Results!</p>
+        <p>Results:</p>
+        <ul>
+          {
+            guesses.map((x, index) => (
+              <li key={`guess-${index}`} className="my-1">
+                <p className={`${x.wasCorrect ? 'text-green-700' : 'text-red-700'}`}>Question: {questions[index].question}</p>
+                {
+                  x.wasCorrect && <p>Answered correctly in {prettyMilliseconds(x.timeTaken * 1000, { verbose: true })}</p>
+                }
+                {
+                  !x.wasCorrect && <p>Correct answer: {atob(questions[index].answer)}</p>
+                }
+              </li>
+            ))
+          }
+        </ul>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
   return (
     <div className="my-4">
-      <p className="text-center text-lg font-bold">{currentQuestion.question}</p>
+      <Alert type="info">
+        <p className="text-lg font-bold text-center">{currentQuestion.question}</p>
+      </Alert>
       <div className="flex flex-wrap my-2">
       {
         currentQuestion.answers.map(x => (
           <div key={x} className="p-2 w-full md:w-1/2">
-            <button onClick={() => onGuess(x)} className="w-full px-2 py-4 bg-fuchsia-300 border-fuchsia-100 border rounded-md drop-shadow-sm hover:underline">{x}</button>
+            <Btn onClick={() => onGuess(x)} className="w-full">{x}</Btn>
           </div>
         ))
       }
