@@ -50,7 +50,7 @@ export default function RootLayout({
             <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=1WW4aBjPK0uCpKTt25xSN3AWa6bI3CVHiklkahD8SkZURVEyUUdBTTMxT1lSTktDOVZaTjdGSkhVTC4u" className="text-blue-500 hover:underline" target="_blank">Report a bug!</a>
         </footer>
         </main>
-        <div className='hidden bg-red-200 bg-green-200 bg-blue-200 bg-orange-200 grid-cols-4 grid-rows-2 text-orange-500 text-gray-500 text-yellow-500 bg-red-50 bg-green-50 bg-blue-50 bg-orange-50 bg-lime-500' />
+        <div className='hidden bg-red-200 bg-green-200 bg-blue-200 bg-orange-200 text-orange-500 text-gray-500 text-yellow-500 bg-red-50 bg-green-50 bg-blue-50 bg-orange-50 bg-lime-500' />
       </body>
     </html>
   );

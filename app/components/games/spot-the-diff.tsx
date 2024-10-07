@@ -131,7 +131,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">Final Results!</p>
         <div className="w-1/3 mx-auto my-1">
           <img className="w-full" src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />

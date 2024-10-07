@@ -60,7 +60,7 @@ const Riddle = ({ riddle, nonce }: RiddleWordProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">Final Results!</p>
         { isCorrect && <p>Well done on guessing correctly 🚀</p>}
         { !isCorrect && <p>That was not the right answer 😭</p>}

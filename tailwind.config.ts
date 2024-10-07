@@ -53,5 +53,13 @@ const config: Config = {
     },
   },
   plugins: [],
+  safelist: [
+    {
+      pattern: /grid-cols+/
+    },
+    {
+      pattern: /grid-rows+/
+    }
+  ]
 }
 export default config

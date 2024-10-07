@@ -95,7 +95,7 @@ const SpinWheel = ({ nonce, wheel, winningIndex }: SpinWheelProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">The wheel has decided!</p>
         { submittingScore && <p>Calculating Score...</p>}
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}

@@ -118,7 +118,7 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">Final Results:</p>
         <ul>
           {

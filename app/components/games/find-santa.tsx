@@ -128,7 +128,7 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">Santa has been found!</p>
         <div className="w-1/3 mx-auto my-1">
           <img className="w-full " src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />

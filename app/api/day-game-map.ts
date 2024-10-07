@@ -1,5 +1,7 @@
-const dayGameMap: { [day: string]: string } = {
-  1: 'match',
+import type { Game } from "./submit-game/calculate-score";
+
+const dayGameMap: { [day: number]: Game } = {
+  1: 'sweeper',
   2: 'word',
   3: 'riddle',
   4: 'diff',

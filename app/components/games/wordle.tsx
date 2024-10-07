@@ -228,7 +228,7 @@ const Wordle = ({ nonce, wordle }: WordleProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl font-bold">Wordle Result!</p>
         {
           wasCorrect && <p className="text-green-700">Congrats on guessing the word <b>&quot;{answer}&quot;</b></p>

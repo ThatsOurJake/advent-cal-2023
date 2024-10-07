@@ -1,49 +1,32 @@
-import MatchPairs, { GameCell } from '@/app/components/games/match-pairs';
 import { generateNonce } from '@/app/utils/nonce';
+import PresentSweeper, { Grid } from '@/app/components/games/present-sweeper';
 
-const matchPairsGrid: Pick<GameCell, 'asset' | 'id'>[] = [
-  {
-    id: '0-0',
-    asset: 'bauble',
-  },
-  {
-    id: '0-1',
-    asset: 'bauble',
-  },
-  {
-    id: '0-2',
-    asset: 'gingerbread',
-  },
-  {
-    id: '0-3',
-    asset: 'gingerbread',
-  },
-  {
-    id: '1-0',
-    asset: 'sleigh',
-  },
-  {
-    id: '1-1',
-    asset: 'sleigh',
-  },
-  {
-    id: '1-2',
-    asset: 'wreath',
-  },
-  {
-    id: '1-3',
-    asset: 'wreath',
-  },
-];
+const presentSpots: Grid['presentSpots'] = [{
+  x: 1,
+  y: 1,
+}, {
+  x: 2,
+  y: 2,
+}, {
+  x: 3,
+  y: 3,
+}];
+
+const grid: Grid = {
+  width: 5,
+  height: 7,
+  presentSpots,
+  hash: Buffer.from(JSON.stringify(presentSpots)).toString('base64'),
+}
 
 export default function DayOne() {
-  const nonce = generateNonce('1', 'match');
+  const nonce = generateNonce('1', 'sweeper');
+  const totalTries = grid.presentSpots.length * 3;
 
   return (
     <div>
       <p className="font-bold text-center text-2xl">1st December 2024</p>
-      <p className='text-center italic my-2'>Match the pairs the quickest to score points!</p>
-      <MatchPairs grid={matchPairsGrid.map(x => ({ ...x, isFlipped: false }))} height={2} width={4} nonce={nonce} />
+      <PresentSweeper nonce={nonce} grid={grid} totalTries={totalTries}/>
     </div>
   )
 };

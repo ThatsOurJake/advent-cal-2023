@@ -82,7 +82,7 @@ const Quiz = ({ nonce, questions }: QuizProps) => {
 
   if (gameFinished) {
     return (
-      <Alert type="info">
+      <Alert type="success">
         <p className="text-2xl mb-1 font-bold">Quiz Results!</p>
         <p>Results:</p>
         <ul>
