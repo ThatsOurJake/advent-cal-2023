@@ -10,7 +10,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     registrationCutoffDay: envInt('REGISTRATION_CUTOFF_DAY', 20),
     showWinnersDate: envStr('SHOW_WINNERS_DATE', '2025-01-14'),
-  }
+  },
 }
 
 module.exports = nextConfig
