@@ -293,7 +293,7 @@ const PresentSweeper = (props: PresentSweeperProps) => {
         <p className="text-2xl font-bold">You found {presentsFound} present(s)</p>
         { submittingScore && <p>Calculating Score...</p>}
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-        { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
         { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
         <div className="my-2">
           <a href="/">

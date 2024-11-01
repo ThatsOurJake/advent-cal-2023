@@ -16,7 +16,7 @@ const baseClasses = [
 const Btn = ({ children, className, ...others }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const classes = [
     ...baseClasses,
-    className?.split(" "),
+    className?.split(","),
   ];
 
   return (
