@@ -10,7 +10,13 @@ import Alert from "../alert";
 
 export interface RiddleDIO {
   question: string;
+  /**
+   * An array of possible answers
+   */
   options: string[];
+  /**
+   * The correct answer in base64 and lowercase
+   */
   answer: string;
 }
 
@@ -52,7 +58,9 @@ const Riddle = ({ riddle, nonce }: RiddleWordProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Wrapped in words, a mystery unfurls, A riddle&apos;s charm, a twist of mind it swirls.</p>
+        <p className="text-center text-2xl mb-1">Christmas Riddle!</p>
+        <p className="text-center mb-1">Can you answer to the riddle from the options provided?</p>
+        <p className="text-center mb-4">To gain maximum points just choose the correct answer</p>
         <Btn onClick={startGame}>Show me the riddle 🌀</Btn>
       </div>
     );

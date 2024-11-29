@@ -306,7 +306,7 @@ const Wordle = ({ nonce, wordle }: WordleProps) => {
     );
   }
 
-  const width = answer.length <= 5 ? 'w-1/2' : 'w-full';
+  const width = answer.length <= 6 ? 'w-1/2' : 'w-full';
 
   return (
     <div className="flex justify-center my-4">

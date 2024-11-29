@@ -9,7 +9,7 @@ import calculateWheelScore from "./wheel";
 import calculateWordScore from "./word";
 import calculateWordleScore from "./wordle";
 
-const CALCULATOR_MAP: { [game: string]: Function } = {
+const CALCULATOR_MAP = {
   match: calculateMatchScore,
   word: calculateWordScore,
   riddle: calculateRiddleScore,
@@ -20,7 +20,7 @@ const CALCULATOR_MAP: { [game: string]: Function } = {
   wordle: calculateWordleScore,
   sweeper: calculateSweeperScore,
   slider: calculateSliderScore
-};
+} as const;
 
 export type Game = keyof typeof CALCULATOR_MAP;
 

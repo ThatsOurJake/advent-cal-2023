@@ -13,24 +13,14 @@ export interface Wordle {
 export const wordles: Wordle[] = [
   {
     wordleId: 'wordle-1',
-    answer: 'santa',
-    maxGuesses: 6,
-  },
-  {
-    wordleId: 'wordle-2',
-    answer: 'elves',
-    maxGuesses: 6,
-  },
-  {
-    wordleId: 'wordle-2',
-    answer: 'present',
-    maxGuesses: 8,
-  },
-  {
-    wordleId: 'wordle-3',
-    answer: 'dasher',
+    answer: 'eggnog',
     maxGuesses: 7,
-  }
+  },
+  {
+    wordleId: 'wordle-2',
+    answer: 'tinsel',
+    maxGuesses: 7,
+  },
 ];
 
 const calculateWordleScore = ({ attemptsTaken, wordleId, wasCorrect }: WorldePayload): number => {

@@ -7,7 +7,7 @@ export const generateNonce = (day: string, game: Game): string => {
 export const parseNonce = (nonce: string): { day: number; game: Game; timeStarted: number } | null => {
   const rawString = Buffer.from(nonce, 'base64').toString('utf-8');
 
-  const [_, day, game, timeStarted] = rawString.split('|');
+  const [_, day, game, timeStarted] = rawString.split('|') as [string, string, Game, string];
 
   if (!day || !game || !timeStarted) {
     return null;

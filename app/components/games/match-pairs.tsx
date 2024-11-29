@@ -36,10 +36,16 @@ const Card = ({ isFlipped = false, id, onClick, asset }: CardProps) => {
   );
 }
 
+export type assets = 'bauble' | 'cane' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath';
+
 export interface GameCell {
-  id: string,
-  asset: 'bauble' | 'cane' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath',
-  isFlipped: boolean,
+  /** 
+   * Position of the cell in the grid
+   * @example '0-0'
+   */
+  id: string;
+  asset: assets;
+  isFlipped: boolean;
 }
 
 interface MatchPairsProps {
@@ -149,7 +155,9 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Match <b>{grid.length / 2}</b> Pairs</p>
+        <p className="text-center text-2xl mb-1">Match <b>{grid.length / 2}</b> Pairs</p>
+        <p className="text-center mb-1">Can you find all the pairs quickly?</p>
+        <p className="text-center mb-4">The quicker you find them the higher your score!</p>
         <Btn onClick={() => startGame()}>Play!</Btn>
       </div>
     );

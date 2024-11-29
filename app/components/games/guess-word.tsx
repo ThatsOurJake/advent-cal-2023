@@ -12,7 +12,13 @@ import TextInput from "../text-input";
 import Alert from "../alert";
 
 export interface WordAnswer {
+  /**
+   * Base64 encoded answer
+   */
   answer: string;
+  /**
+   * Array of missing letters - Allows for random selection
+   */
   missingLetters: number[][];
 }
 

@@ -9,6 +9,7 @@ import logger from "@/logger";
 import type { FindPayload } from "@/app/api/submit-game/calculate-score/find";
 import Btn from "../btn";
 import Alert from "../alert";
+import { createPortal } from "react-dom";
 
 interface FindSantaProps {
   baseFolder: string;
@@ -63,12 +64,15 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     const { clientX, clientY, target } = e;
     const image = target as HTMLImageElement; 
     const { left, top } = image.getBoundingClientRect();
+    const scrolledTop = document.documentElement.scrollTop;
     
+    console.log(clientY - top - scrolledTop);
+
     return [
       clientX - left,
       clientY - top,
       clientX,
-      clientY
+      clientY + scrolledTop,
     ];
   }
 
@@ -120,7 +124,9 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">🧐 - Where has Santa gone, help find them?</p>
+        <p className="text-center text-2xl mb-1">Santa has gone missing!</p>
+        <p className="text-center mb-1">Can you help find them as christmas will be ruined!</p>
+        <p className="text-center mb-4">The quicker you find Santa and Santa&apos;s clones the higher your score will be.</p>
         <Btn onClick={startGame}>Show me the image</Btn>
       </div>
     );
@@ -151,11 +157,14 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     <div>
       <div className="sr-only"><button onClick={screenReaderScore}>Click here if you are using a screen reader</button></div>
       <section aria-hidden>
-        <div className="fixed z-10 inset-0 pointer-events-none">
-          {
-            checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
-          }
-        </div>
+        {createPortal(
+          <div className="absolute z-10 inset-0 pointer-events-none">
+            {
+              checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
+            }
+          </div>,
+          document.body
+        )}
         <div className="relative w-1/2 mx-auto">
           <img onClick={onLocationClick} className="w-full z-10 cursor-pointer" src={`/images/${baseFolder}/guess.jpeg`} />
           <img className="absolute inset-0 opacity-0 pointer-events-none" src={`/images/${baseFolder}/mask.jpeg`} ref={maskRef} />

@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} relative`}>
         <main className="relative min-w-screen min-h-screen bg-black">
           <div
             aria-hidden

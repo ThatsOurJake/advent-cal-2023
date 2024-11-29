@@ -1,10 +1,10 @@
 import type { Game } from "./submit-game/calculate-score";
 
 const dayGameMap: { [day: number]: Game } = {
-  1: 'sweeper',
-  2: 'word',
+  1: 'diff',
+  2: 'match',
   3: 'riddle',
-  4: 'diff',
+  4: 'wordle',
   5: 'find',
   6: 'slider',
   7: 'quiz',

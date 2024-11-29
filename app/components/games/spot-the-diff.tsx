@@ -95,7 +95,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     const sum = data?.reduce((acc, current) => acc += current, 0);
     const avg = Math.floor(sum / data.length);
 
-    // console.log(avg);
+    console.log(avg);
 
     const answer = averages.find(x => {
       const lowerBound = x - THRESHOLD;
@@ -123,7 +123,9 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Can you spot the differences between the left and right image?</p>
+        <p className="text-center text-2xl mb-1">Spot the difference!</p>
+        <p className="text-center mb-1">Can you tell the difference between two images?</p>
+        <p className="text-center mb-4">There are &quot;{averages.length}&quot; differences and you will be scored based on your time taken.</p>
         <Btn onClick={startGame}>Show me the images</Btn>
       </div>
     );

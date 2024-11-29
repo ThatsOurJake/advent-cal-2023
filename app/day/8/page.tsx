@@ -1,7 +1,7 @@
-import MatchPairs, { GameCell } from '@/app/components/games/match-pairs';
+import MatchPairs, { type NonFlippedGameCell } from '@/app/components/games/match-pairs';
 import { generateNonce } from '@/app/utils/nonce';
 
-const matchPairsGrid: Pick<GameCell, 'asset' | 'id'>[] = [
+const matchPairsGrid: NonFlippedGameCell[] = [
   {
     id: '0-0',
     asset: 'jumper',
