@@ -1,12 +1,13 @@
 'use client'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Btn from '../btn';
-import api from '../../utils/api';
-import Alert from '../alert';
 import shuffleArray from 'shuffle-array';
-import { SliderPayload } from '../../api/submit-game/calculate-score/slider';
-import logger from '../../../logger';
+
+import Btn from '@/app/components/btn';
+import api from '@/app/utils/api';
+import Alert from '@/app/components/alert';
+import { SliderPayload } from '@/app/api/submit-game/calculate-score/slider';
+import logger from '@/logger';
 
 type images = 'snowman';
 type directions =  'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight';

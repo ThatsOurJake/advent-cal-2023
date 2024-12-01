@@ -5,11 +5,11 @@ import { get, set } from 'idb-keyval';
 
 import type { Wordle, WorldePayload } from "@/app/api/submit-game/calculate-score/wordle";
 
-import logger from "../../../logger";
-import api from "../../utils/api";
-import Btn from "../btn";
-import Alert from "../alert";
-import Loading from "../loading";
+import logger from "@/logger";
+import api from "@/app/utils/api";
+import Btn from "@/app/components/btn";
+import Alert from "@/app/components/alert";
+import Loading from "@/app/components/loading";
 
 interface WordleProps {
   nonce: string;

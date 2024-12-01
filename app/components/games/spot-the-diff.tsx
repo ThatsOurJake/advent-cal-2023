@@ -9,6 +9,7 @@ import type { DiffPayload } from "@/app/api/submit-game/calculate-score/diff";
 import logger from "@/logger";
 import Btn from "../btn";
 import Alert from "../alert";
+import { createPortal } from "react-dom";
 
 interface SpotTheDiffProps {
   baseFolder: string;
@@ -67,12 +68,13 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     const { clientX, clientY, target } = e;
     const image = target as HTMLImageElement; 
     const { left, top } = image.getBoundingClientRect();
+    const scrolledTop = document.documentElement.scrollTop;
     
     return [
       clientX - left,
       clientY - top,
       clientX,
-      clientY
+      clientY + scrolledTop,
     ];
   }
 
@@ -156,11 +158,14 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     <div>
       <div className="sr-only"><button onClick={screenReaderScore}>Click here if you are using a screen reader</button></div>
       <section aria-hidden>
-        <div className="fixed z-10 inset-0 pointer-events-none">
-          {
-            checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
-          }
-        </div>
+      {createPortal(
+          <div className="absolute z-10 inset-0 pointer-events-none">
+            {
+              checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
+            }
+          </div>,
+          document.body,
+        )}
         <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
           <div className="w-full relative cursor-not-allowed">
             <img className="p-2 absolute inset-0 z-10" src={`/images/${baseFolder}/original.jpeg`} alt="original"/>

@@ -66,8 +66,6 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     const { left, top } = image.getBoundingClientRect();
     const scrolledTop = document.documentElement.scrollTop;
     
-    console.log(clientY - top - scrolledTop);
-
     return [
       clientX - left,
       clientY - top,

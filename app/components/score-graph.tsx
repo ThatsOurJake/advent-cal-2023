@@ -14,7 +14,7 @@ import {
   ChartData,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import getPositionColour from '../utils/get-position-colour';
+import getPositionColour from '@/app/utils/get-position-colour';
 
 ChartJS.register(
   CategoryScale,

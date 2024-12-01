@@ -1,4 +1,4 @@
-import type { assets, GameCell } from "../components/games/match-pairs";
+import type { assets, GameCell } from "@/app/components/games/match-pairs";
 
 export const generateMatchCells = (width: number, height: number, assets: assets[]): GameCell[] => {
   const assetCount = width * height / 2;

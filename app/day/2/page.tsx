@@ -1,6 +1,6 @@
 import { generateNonce } from '@/app/utils/nonce';
-import MatchPairs, { GameCell } from '../../components/games/match-pairs';
-import generateMatchCells from '../../utils/generate-match-cells';
+import MatchPairs from '@/app/components/games/match-pairs';
+import generateMatchCells from '@/app/utils/generate-match-cells';
 
 const WIDTH = 4;
 const HEIGHT = 2;

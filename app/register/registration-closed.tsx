@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Alert from "../components/alert";
+
+import Alert from "@/app/components/alert";
 
 const RegistrationClosed = () => {
   return (

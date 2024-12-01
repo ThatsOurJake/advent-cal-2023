@@ -1,8 +1,8 @@
 import mongo from "@/app/services/mongo";
 import getUser from "@/app/utils/get-user";
-import ScoreGraph from "../components/score-graph";
-import averagePointsCalculation from "../utils/average-points-calculation";
-import LeaderboardRow from "../components/leaderboard-row";
+import ScoreGraph from "@/app/components/score-graph";
+import averagePointsCalculation from "@/app/utils/average-points-calculation";
+import LeaderboardRow from "@/app/components/leaderboard-row";
 
 const Leaderboard = async () => {
   const user = await getUser();

@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import isValid from "@/app/utils/is-valid";
 import getUser from "@/app/utils/get-user";
 import AlreadyCompleted from "@/app/components/already-complete";
-import NotUnlocked from "../components/not-unlocked";
+import NotUnlocked from "@/app/components/not-unlocked";
 
 export default async function DayLayout({
   children,

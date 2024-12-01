@@ -2,9 +2,9 @@
 
 import classNames from 'classnames';
 
-import getUser from './utils/get-user';
-import mongo from './services/mongo';
-import suffixOrdinalString from './utils/ordinal-str';
+import getUser from '@/app/utils/get-user';
+import mongo from '@/app/services/mongo';
+import suffixOrdinalString from '@/app/utils/ordinal-str';
 
 export default async function HomeOpen() {
   const user = await getUser();

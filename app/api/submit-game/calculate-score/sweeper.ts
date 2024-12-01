@@ -1,4 +1,4 @@
-import { Grid } from "../../../components/games/present-sweeper";
+import { Grid } from "@/app/components/games/present-sweeper";
 
 export interface SweeperPayload {
   presentsFound: number;
@@ -15,9 +15,11 @@ const calculateSweeperScore = ({ gameHash, presentsFound, triesLeft }: SweeperPa
   const grid = JSON.parse(Buffer.from(gridHash, 'base64').toString('utf-8')) as Grid['presentSpots'];
   const selectedCells = JSON.parse(Buffer.from(selectedCellsHash, 'base64').toString('utf-8')) as { x: number, y: number }[];
 
-  const selectedCellsContainsAllPresents = grid.every(({ x, y }) => selectedCells.some(cell => cell.x === x && cell.y === y));
+  const selectedCellPresents = selectedCells.filter(cell => grid.some(present => present.x === cell.x && present.y === cell.y));
+  const validPresentSelection = selectedCellPresents.every(cell => grid.some(present => present.x === cell.x && present.y === cell.y));
 
-  if (!selectedCellsContainsAllPresents) {
+  // This checks if the presents selected are the same as the presents in the grid
+  if (!validPresentSelection) {
     return 0;
   }
 

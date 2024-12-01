@@ -1,6 +1,6 @@
 import { generateNonce } from '@/app/utils/nonce';
-import Wordle from '../../components/games/wordle';
-import { wordles } from '../../api/submit-game/calculate-score/wordle';
+import Wordle from '@/app/components/games/wordle';
+import { wordles } from '@/app/api/submit-game/calculate-score/wordle';
 
 export default function DayFour() {
   const nonce = generateNonce('4', 'wordle');

@@ -1,4 +1,4 @@
-import type { Game } from "../api/submit-game/calculate-score";
+import type { Game } from "@/app/api/submit-game/calculate-score";
 
 export const generateNonce = (day: string, game: Game): string => {
   return Buffer.from(`${crypto.randomUUID}|${day}|${game}|${Date.now()}`, 'utf-8').toString('base64');

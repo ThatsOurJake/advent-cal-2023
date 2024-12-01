@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import logger from "@/logger";
 
-import { SweeperPayload } from "@/app/api/submit-game/calculate-score/sweeper";
+import type { SweeperPayload } from "@/app/api/submit-game/calculate-score/sweeper";
 import Alert from "@/app/components/alert";
 import Btn from "@/app/components/btn";
 import api from "@/app/utils/api";
@@ -185,10 +185,15 @@ const PresentSweeper = (props: PresentSweeperProps) => {
   const [submittingScore, setSubmittingScore] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<boolean>(false);
   const [finalScore, setFinalScore] = useState<number>(0);
+  const lock = useRef(false);
 
   const onCellClick = useCallback((x: number, y: number, highlight = false) => {
+    if (lock.current) {
+      return;
+    }
+
     const currentCell = selectedCells.find(cell => cell.x === x && cell.y === y);
-    
+
     if (currentCell?.metadata?.beenSelected) {
       return;
     }
@@ -243,24 +248,27 @@ const PresentSweeper = (props: PresentSweeperProps) => {
 
   useEffect(() => {
     if (presentSpots.length === presentsFound || triesLeft === 0) {
-      setGameFinished(true);
-      setSubmittingScore(true);
-      const selectedCellsHash = window.btoa(JSON.stringify(selectedCells.map((cell) => ({
-        x: cell.x,
-        y: cell.y,
-      }))));
+      lock.current = true;
+      setTimeout(() => {
+        setGameFinished(true);
+        setSubmittingScore(true);
+        const selectedCellsHash = window.btoa(JSON.stringify(selectedCells.map((cell) => ({
+          x: cell.x,
+          y: cell.y,
+        }))));
 
-      api.submitGameResult<SweeperPayload>(nonce, {
-        gameHash: `${grid.hash}|${selectedCellsHash}`,
-        presentsFound,
-        triesLeft,
-      })
-      .then(s => setFinalScore(s))
-      .catch(e => {
-        setSubmitError(true);
-        logger.error(e);
-      })
-      .finally(() => setSubmittingScore(false));
+        api.submitGameResult<SweeperPayload>(nonce, {
+          gameHash: `${grid.hash}|${selectedCellsHash}`,
+          presentsFound,
+          triesLeft,
+        })
+        .then(s => setFinalScore(s))
+        .catch(e => {
+          setSubmitError(true);
+          logger.error(e);
+        })
+        .finally(() => setSubmittingScore(false));
+      }, 750);
     }
   }, [triesLeft, presentsFound, presentSpots, nonce, grid, selectedCells]);
 
@@ -293,6 +301,7 @@ const PresentSweeper = (props: PresentSweeperProps) => {
         <p className="text-2xl font-bold">You found {presentsFound} present(s)</p>
         { submittingScore && <p>Calculating Score...</p>}
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && finalScore === 0 && <p>You did not find any presents and therefore score <b>0</b> points</p>}
         { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
         { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
         <div className="my-2">

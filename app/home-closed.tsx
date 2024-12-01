@@ -1,12 +1,12 @@
 'use server';
 
-import getUser from './utils/get-user';
-import mongo from './services/mongo';
-import averagePointsCalculation from './utils/average-points-calculation';
-import LeaderboardRow from './components/leaderboard-row';
-import ScoreGraph from './components/score-graph';
-import HomeBanner from './components/home-banner';
-import suffixOrdinalString from './utils/ordinal-str';
+import getUser from '@/app/utils/get-user';
+import mongo from '@/app/services/mongo';
+import averagePointsCalculation from '@/app/utils/average-points-calculation';
+import LeaderboardRow from '@/app/components/leaderboard-row';
+import ScoreGraph from '@/app/components/score-graph';
+import HomeBanner from '@/app/components/home-banner';
+import suffixOrdinalString from '@/app/utils/ordinal-str';
 
 export default async function HomeClosed() {
   const user = await getUser();

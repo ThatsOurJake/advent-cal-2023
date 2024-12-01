@@ -1,14 +1,14 @@
 'use client';
 
 import { useFormState } from "react-dom";
-
 import Link from "next/link";
 import { RedirectType, redirect } from "next/navigation";
+
 import SubmitBtn from "@/app/components/submit-btn";
 import TextInput from "@/app/components/text-input";
+import Alert from "@/app/components/alert";
 
 import { signIn } from "./actions";
-import Alert from "../components/alert";
 
 const Login = () => {
   const [state, formAction] = useFormState(signIn, {});

@@ -1,5 +1,5 @@
 import { generateNonce } from '@/app/utils/nonce';
-import SpotTheDiff from '../../components/games/spot-the-diff';
+import SpotTheDiff from '@/app/components/games/spot-the-diff';
 
 
 export default function DayOne() {

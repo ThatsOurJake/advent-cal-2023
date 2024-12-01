@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { ScoreboardUser } from '../services/mongo';
-import getPositionColour from '../utils/get-position-colour';
 import classNames from 'classnames';
+
+import { ScoreboardUser } from '@/app/services/mongo';
+import getPositionColour from '@/app/utils/get-position-colour';
 
 interface LeaderboardRowProps {
   user: ScoreboardUser;
