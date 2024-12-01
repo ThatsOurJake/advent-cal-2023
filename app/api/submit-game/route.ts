@@ -71,7 +71,9 @@ export async function POST(req: Request) {
   let points = -1;
 
   if (calculator) {
-    points = calculator(data.payload);
+    // The front end uses the types when calling the API
+    // so we can safely cast the payload to any
+    points = calculator(data.payload as any);
   }
 
   if (points >= 0) {

@@ -28,7 +28,7 @@ ChartJS.register(
 
 interface ScoreGraphProps {
   pointsToDays?: { day: number; points: number }[];
-  averagePointsToDays?: { day: string; points: number }[];
+  averagePointsToDays?: { day: number; points: number }[];
   otherUsers?: { name: string; position: number; points: { day: number; points: number }[] }[];
 }
 
