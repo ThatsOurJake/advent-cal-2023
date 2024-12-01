@@ -7,7 +7,7 @@ export default function DaySeventeen() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">17th December 2023</p>
+      <p className="font-bold text-center text-4xl">17th December 2024</p>
       <p className='text-center italic my-2'>Christmas Wordle!</p>
       <Wordle nonce={nonce} wordle={wordles[1]} />
     </div>

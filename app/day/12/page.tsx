@@ -34,7 +34,7 @@ export default function DayTwelve() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">12th December 2023</p>
+      <p className="font-bold text-center text-4xl">12th December 2024</p>
       <p className='text-center italic my-2'>Guess the word from the missing letters</p>
       <GuessWord words={words} nonce={nonce} />
     </div>

@@ -32,7 +32,7 @@ export default function DayFourteen() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">14th December 2023</p>
+      <p className="font-bold text-center text-4xl">14th December 2024</p>
       <p className='text-center italic my-2'>Wizzy Quizzy!</p>
       <Quiz nonce={nonce} questions={shuffleArray(questions)} />
     </div>

@@ -115,8 +115,9 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Guess the words from the missing letters.</p>
+        <p className="text-center text-2xl mb-1">Guess the words from the missing letters.</p>
         <p className="text-center text-lg mb-2">For example E__no_ = Eggnog.</p>
+        <p className="text-center mb-4">The quicker you get guess the word, the higher your score!</p>
         <Btn onClick={() => startGame()}>Start Game!</Btn>
       </div>
     );

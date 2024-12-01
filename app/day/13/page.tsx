@@ -14,7 +14,7 @@ export default function DayThirteen() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">13th December 2023</p>
+      <p className="font-bold text-center text-4xl">13th December 2024</p>
       <p className='text-center italic my-2'>Can you answer this riddle?</p>
       <Riddle nonce={nonce} riddle={ridd} />
     </div>

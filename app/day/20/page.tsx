@@ -7,7 +7,7 @@ export default function DayTwenty() {
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">20th December 2023</p>
+      <p className="font-bold text-center text-4xl">20th December 2024</p>
       <p className='text-center italic my-2'>Welcome to the Wordle!</p>
       <Wordle nonce={nonce} wordle={wordles[2]} />
     </div>
