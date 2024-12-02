@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { MouseEvent, useCallback, useRef, useState } from "react";
@@ -155,7 +154,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   }
 
   return (
-    <div>
+    <div className="xl:w-2/3 mx-auto py-2">
       <div className="sr-only"><button onClick={screenReaderScore}>Click here if you are using a screen reader</button></div>
       <section aria-hidden>
       {createPortal(
@@ -169,7 +168,7 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
         <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
           <div className="w-full relative cursor-not-allowed">
             <img className="p-2 absolute inset-0 z-10" src={`/images/${baseFolder}/original.jpeg`} alt="original"/>
-            <img className="p-2 absolute inset-0" src={`/images/${baseFolder}/mask.jpeg`} alt="mask" ref={maskRef} />
+            <img className="p-2 absolute inset-0 invisible" src={`/images/${baseFolder}/mask.jpeg`} alt="mask" ref={maskRef} />
           </div>
           <div className="cursor-pointer">
             <img className="w-full p-2" src={`/images/${baseFolder}/hidden.jpeg`} onClick={onLocationClick} alt="guess" />

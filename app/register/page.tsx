@@ -1,4 +1,5 @@
 import getConfig from "next/config";
+
 import RegistrationOpen from "./registration-open";
 import RegistrationClosed from "./registration-closed";
 

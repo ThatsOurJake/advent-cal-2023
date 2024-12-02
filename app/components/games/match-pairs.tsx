@@ -102,6 +102,7 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
     const item = newGrid.find(x => x.id === id)!;
 
     if (item.isFlipped) {
+      lock.current = false;
       return;
     }
 
@@ -150,7 +151,7 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
   const startGame = () => {
     setHasStarted(true);
     startTime.current = Date.now();
-  }
+  };
 
   if (!hasStarted) {
     return (
@@ -183,7 +184,7 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
 
   if (hasStarted) {
     return (
-      <div className={`grid grid-cols-${width} grid-rows-${height}`}>
+      <div className={`grid grid-cols-${width} grid-rows-${height} w-2/3 mx-auto py-2`}>
         {
           gameGrid.map(x => <Card isFlipped={x.isFlipped} id={x.id} key={x.id} onClick={onClick} asset={x.asset} />)
         }

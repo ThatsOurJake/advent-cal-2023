@@ -36,7 +36,7 @@ export default async function HomeOpen() {
           }
         </div>
       </div>
-      <div className='w-4/5 mx-auto my-2'>
+      <div className='w-4/5 xl:w-2/3 mx-auto my-2'>
         <div className='grid grid-cols-5 w-full'>
           {
             Array(25).fill(() => null).map((_, i) => {
