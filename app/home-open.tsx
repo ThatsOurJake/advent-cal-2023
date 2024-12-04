@@ -51,7 +51,7 @@ export default async function HomeOpen() {
                 <a key={`day-${day}`} href={`/day/${day}`}>
                   <div className={classes}>
                     <img className='w-full h-full rounded-base shadow-light border-2 border-black transition-all group-hover:shadow-none group-hover:translate-x-boxShadowX group-hover:translate-y-boxShadowY' src={`/cells/day-${day}.png`} alt={`day ${day} cell`} />
-                    <p className='absolute right-8 top-6 z-10 text-4xl font-base transition-all group-hover:translate-x-boxShadowX group-hover:translate-y-boxShadowY text-black'>{day}</p>
+                    <p className='absolute right-8 top-6 z-10 text-4xl xl:text-2xl font-base transition-all group-hover:translate-x-boxShadowX group-hover:translate-y-boxShadowY text-black'>{day}</p>
                   </div>
                 </a>
               );

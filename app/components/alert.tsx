@@ -22,6 +22,8 @@ const baseClasses = [
   'px-4',
   'mt-6',
   'mb-4',
+  'xl:w-2/3',
+  'xl:mx-auto',
 ];
 
 const Alert = ({ children, type }: AlertProps) => {
