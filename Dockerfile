@@ -1,10 +1,13 @@
 FROM node:22-alpine AS build
+
+ARG BUILD_DATE
+ENV BUILD_DATE=$BUILD_DATE
+
 WORKDIR /build
 COPY . .
 RUN npm install
 ENV NODE_ENV="production"
 RUN npm run build
-
 
 
 FROM --platform=linux/amd64 node:22-alpine AS prod_modules

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import getConfig from "next/config";
 
 const inter = Quicksand({ subsets: ["latin"] });
 
@@ -10,13 +11,16 @@ export const metadata: Metadata = {
   description: "Woo - Christmas",
 };
 
+const { publicRuntimeConfig } = getConfig();
+const { buildDate } = publicRuntimeConfig;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-build={buildDate}>
       <body className={`${inter.className} relative`}>
         <main className="relative min-w-screen min-h-screen bg-black">
           <div
