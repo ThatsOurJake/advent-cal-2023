@@ -127,13 +127,19 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
     return (
       <Alert type="success">
         <p className="text-2xl font-bold">Final Results:</p>
-        <ul>
-          {
-            words.map((x, index) => (<li className="list-decimal list-inside" key={`word-${index}`}>{atob(x.answer)}</li>))
-          }
-        </ul>
-        <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
         { submittingScore && <p>Calculating Score...</p>}
+        {
+          !submittingScore && !submitError && (
+            <>
+              <ul>
+                {
+                  words.map((x, index) => (<li className="list-decimal list-inside" key={`word-${index}`}>{atob(x.answer)}</li>))
+                }
+              </ul>
+              <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
+            </>
+          )
+        }
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
         { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
         { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}

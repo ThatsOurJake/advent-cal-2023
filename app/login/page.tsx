@@ -47,13 +47,11 @@ const Login = () => {
           <TextInput required maxLength={38} placeholder="User UUID" name="uuid" />
           <SubmitBtn text="Sign In" textSubmitting="Signing In" />
         </form>
-        <div className="w-2/3 mx-auto">
-          <Alert type="info">
-            <p className="font-bold">Want to play?</p>
-            <p>Click <span><Link href="/register" className="text-blue-500 hover:underline">here</Link></span> to register!</p>
-            <p className="text-sm italic">Please note previous years UUID will not work. If you have forgotten your UUID? Drop Jake a message</p>
-          </Alert>
-        </div>
+        <Alert type="info">
+          <p className="font-bold">Want to play?</p>
+          <p>Click <span><Link href="/register" className="text-blue-500 hover:underline">here</Link></span> to register!</p>
+          <p className="text-sm italic">Please note previous years UUID will not work. If you have forgotten your UUID? Drop Jake a message</p>
+        </Alert>
       </div>
     </>
   )

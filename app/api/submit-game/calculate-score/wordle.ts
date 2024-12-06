@@ -23,6 +23,9 @@ export const wordles: Wordle[] = [
   },
 ];
 
+const attemptsMultiplier = 20;
+const wordLengthMultiplier = 10;
+
 const calculateWordleScore = ({ attemptsTaken, wordleId, wasCorrect }: WorldePayload): number => {
   const wordle = wordles.find(x => x.wordleId === wordleId);
 
@@ -36,10 +39,22 @@ const calculateWordleScore = ({ attemptsTaken, wordleId, wasCorrect }: WorldePay
     return 0;
   }
 
-  const attemptsMultiplier = 20;
-  const wordLengthMultiplier = 10;
-
   return (answer.length * wordLengthMultiplier) + ((maxGuesses * attemptsMultiplier) - (attemptsTaken * attemptsMultiplier))
 };
+
+export const calculateAttemptsTaken = (wordleId: string, points: number): number => {
+  const wordle = wordles.find(x => x.wordleId === wordleId);
+
+  if (!wordle) {
+    return 0;
+  }
+
+  const { answer, maxGuesses } = wordle;
+
+  const a = points - (answer.length * wordLengthMultiplier);
+  const b = a / attemptsMultiplier;
+
+  return maxGuesses - b;
+}
 
 export default calculateWordleScore;

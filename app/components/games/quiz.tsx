@@ -85,22 +85,26 @@ const Quiz = ({ nonce, questions }: QuizProps) => {
       <Alert type="success">
         <p className="text-2xl mb-1 font-bold">Quiz Results!</p>
         <p>Results:</p>
-        <ul>
-          {
-            guesses.map((x, index) => (
-              <li key={`guess-${index}`} className="my-1">
-                <p className={`${x.wasCorrect ? 'text-green-700' : 'text-red-700'}`}>Question: {questions[index].question}</p>
-                {
-                  x.wasCorrect && <p>Answered correctly in {prettyMilliseconds(x.timeTaken * 1000, { verbose: true })}</p>
-                }
-                {
-                  !x.wasCorrect && <p>Correct answer: {atob(questions[index].answer)}</p>
-                }
-              </li>
-            ))
-          }
-        </ul>
         { submittingScore && <p>Calculating Score...</p>}
+        {
+          !submittingScore && !submitError && (
+            <ul>
+              {
+                guesses.map((x, index) => (
+                  <li key={`guess-${index}`} className="my-1">
+                    <p className={`${x.wasCorrect ? 'text-green-700' : 'text-red-700'}`}>Question: {questions[index].question}</p>
+                    {
+                      x.wasCorrect && <p>Answered correctly in {prettyMilliseconds(x.timeTaken * 1000, { verbose: true })}</p>
+                    }
+                    {
+                      !x.wasCorrect && <p>Correct answer: {atob(questions[index].answer)}</p>
+                    }
+                  </li>
+                ))
+              }
+            </ul>
+          )
+        }
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
         { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
         { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}

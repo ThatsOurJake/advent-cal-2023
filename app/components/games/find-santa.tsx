@@ -134,11 +134,15 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     return (
       <Alert type="success">
         <p className="text-2xl font-bold">Santa has been found!</p>
-        <div className="w-1/3 mx-auto my-1">
-          <img className="w-full " src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />
-        </div>
-        <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
         { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && !submitError && (
+          <>
+            <div className="w-1/3 mx-auto my-1">
+              <img className="w-full " src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />
+            </div>
+            <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
+          </>
+        )}
         { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
         { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
         { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
