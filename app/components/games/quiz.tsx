@@ -11,6 +11,9 @@ import Alert from "../alert";
 
 export interface Question {
   question: string;
+  /**
+   * Base64 encoded answer
+   */
   answer: string;
   answers: string[];
 }
@@ -75,6 +78,7 @@ const Quiz = ({ nonce, questions }: QuizProps) => {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
         <p className="text-center text-lg mb-2">Can you answer the following <b>{questions.length}</b> questions correctly?</p>
+        <p className="text-center mb-4">Points are awarded for time taken and number of questions answered correctly.</p>
         <Btn onClick={() => startGame()}>I will give it a go!</Btn>
       </div>
     );
@@ -92,7 +96,7 @@ const Quiz = ({ nonce, questions }: QuizProps) => {
               {
                 guesses.map((x, index) => (
                   <li key={`guess-${index}`} className="my-1">
-                    <p className={`${x.wasCorrect ? 'text-green-700' : 'text-red-700'}`}>Question: {questions[index].question}</p>
+                    <p className={`${x.wasCorrect ? 'text-green-700' : 'text-red-700'} font-bold`}>Question: {questions[index].question}</p>
                     {
                       x.wasCorrect && <p>Answered correctly in {prettyMilliseconds(x.timeTaken * 1000, { verbose: true })}</p>
                     }

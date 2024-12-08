@@ -21,6 +21,11 @@ export const wordles: Wordle[] = [
     answer: 'tinsel',
     maxGuesses: 7,
   },
+  {
+    wordleId: 'wordle-2',
+    answer: 'wreath',
+    maxGuesses: 7,
+  },
 ];
 
 const attemptsMultiplier = 20;

@@ -1,15 +1,43 @@
 import { generateNonce } from '@/app/utils/nonce';
-import Wordle from '@/app/components/games/wordle';
-import { wordles } from '@/app/api/submit-game/calculate-score/wordle';
+import PresentSweeper, { type Grid } from '../../components/games/present-sweeper';
+
+const presentSpots: Grid['presentSpots'] = [
+  {
+    x: 0,
+    y: 0,
+  },
+  {
+    x: 1,
+    y: 4
+  },
+  {
+    x: 5,
+    y: 0
+  },
+  {
+    x: 3,
+    y: 5,
+  },
+  {
+    x: 5,
+    y: 6
+  }
+];
+
+const grid: Grid = {
+  width: 6,
+  height: 7,
+  presentSpots,
+  hash: Buffer.from(JSON.stringify(presentSpots)).toString('base64'),
+}
 
 export default function DayEleven() {
-  const nonce = generateNonce('11', 'wordle');
+  const nonce = generateNonce('11', 'sweeper');
 
   return (
     <div>
       <p className="font-bold text-center text-4xl">11th December 2024</p>
-      <p className='text-center italic my-2'>Christmas Wordle!</p>
-      <Wordle nonce={nonce} wordle={wordles[0]} />
+      <PresentSweeper nonce={nonce} grid={grid} totalTries={12} />
     </div>
   )
 };

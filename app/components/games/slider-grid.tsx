@@ -61,6 +61,9 @@ const SliderGrid = (props: ImageGridProps) => {
   const initGrid = useCallback(() => {
     const grid = Array.from({ length: size * size }).map((_, index) => index);
     grid[grid.length - 1] = -1; // Empty cell
+
+    setSolution(grid.join(''));
+
     const shuffled = shuffleArray(grid);
 
     if (shuffled[shuffled.length - 1] !== -1) {
@@ -84,8 +87,7 @@ const SliderGrid = (props: ImageGridProps) => {
       }
     }
 
-    setImageGrid(grid);
-    setSolution(grid.join(''));
+    setImageGrid(shuffled);
   }, [size, isGridSolvable]);
 
   const checkForWin = (grid: number[]) => {
@@ -150,6 +152,8 @@ const SliderGrid = (props: ImageGridProps) => {
     setImageGrid(newGrid);
     setNumberOfMoves(numberOfMoves + 1);
 
+    console.log(newGrid);
+
     if (checkForWin(newGrid)) {
       lock.current = true;
       setTimeout(() => {
@@ -200,7 +204,13 @@ const SliderGrid = (props: ImageGridProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Slide puzzle</p>
+        <p className="text-center text-lg mb-2">Sliding Grid puzzle</p>
+        <p className="text-center mb-2">Use your arrow keys to unjumble the sliding puzzle!</p>
+        <p className="text-center mb-2">Scoring is based on number of moves not time - so take your time! Giving up will *NOT* resort in zero points either, so if you get frustrated that is a valid option.</p>
+        <div className='w-1/2 my-2 mx-auto'>
+          <img src={`/image-grid/${gridImage}/final.jpeg`} alt='' />
+        </div>
+        <p className='italic text-center text-sm mb-2'>^ The puzzle that will be jumbled ^</p>
         <Btn onClick={() => setHasStarted(true)}>Show me the puzzle</Btn>
       </div>
     )

@@ -320,7 +320,7 @@ const PresentSweeper = (props: PresentSweeperProps) => {
         <p>Presents found: <b>{presentsFound}/{presentSpots.length}</b></p>
         <p>Guesses left: <b>{triesLeft}</b></p>
       </div>
-      <div className={`grid grid-cols-${grid.width} gap-4 w-1/3 mx-auto`}>
+      <div className={`grid grid-cols-${grid.width} gap-4 w-2/3 xl:w-1/2 mx-auto`}>
       {
         Array.from({ length: width * height }).map((_, i) => {
           const x = i % width;
