@@ -1,8 +1,5 @@
 FROM node:22-alpine AS build
 
-ARG BUILD_DATE
-ENV BUILD_DATE=$BUILD_DATE
-
 WORKDIR /build
 COPY . .
 RUN npm install
@@ -19,7 +16,10 @@ RUN npm install --omit=dev
 
 
 FROM --platform=linux/amd64 node:22-alpine
+ARG BUILD_DATE
+ENV BUILD_DATE=$BUILD_DATE
 ENV NODE_ENV="production"
+
 WORKDIR /app
 COPY --from=build /build/.next /app/.next
 COPY --from=build /build/next.config.js /app/next.config.js
