@@ -29,7 +29,7 @@ const LeaderboardRow = ({ currentUserId, position, user, daysCompleted }: Leader
         <p className="text-lg truncate">{user.name} | {user.squad}</p>
         <p className='font-bold'>{user.points} Points ✨</p>
         {
-          daysCompleted && (
+          daysCompleted != undefined && (
             <p className='text-xs'>{daysCompleted}/25 days completed</p>
           )
         }
