@@ -9,14 +9,13 @@ const Leaderboard = async () => {
   const scoreboard = await mongo.getScoreboard();
 
   const currentPosition = scoreboard.find(x => x.uuid === user.uuid)?.position || 0;
-
   const averagePointsToDays = averagePointsCalculation(scoreboard);
 
   return (
     <>
       <p className="text-center text-2xl font-bold">Leaderboard!</p>
       <div className="md:w-2/3 mx-auto my-2">
-        <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} />
+        <LeaderboardRow currentUserId={user.uuid} position={currentPosition} user={user} daysCompleted={user.daysComplete.length} />
         <div className="w-3/4 aspect-video mt-4 mx-auto">
           <ScoreGraph pointsToDays={user.pointsToDays} averagePointsToDays={averagePointsToDays} />
         </div>
@@ -24,7 +23,7 @@ const Leaderboard = async () => {
         <section>
           {
             scoreboard.map((x) => (
-              <LeaderboardRow key={x.uuid} currentUserId={user.uuid} user={x} position={x.position || 0} />
+              <LeaderboardRow key={x.uuid} currentUserId={user.uuid} user={x} position={x.position || 0} daysCompleted={Object.keys(x.pointsToDays).length} />
             ))
           }
         </section>
