@@ -90,14 +90,14 @@ const SliderGrid = (props: ImageGridProps) => {
     setImageGrid(shuffled);
   }, [size, isGridSolvable]);
 
-  const checkForWin = (grid: number[]) => {
+  const checkForWin = useCallback((grid: number[]) => {
     return grid.join('') === solution;
-  };
+  }, [solution]);
 
-  const finishGame = useCallback(() => {
+  const finishGame = useCallback((gaveUp: boolean = false) => {
     setSubmittingScore(true);
 
-    api.submitGameResult<SliderPayload>(nonce, { size, numberOfMoves })
+    api.submitGameResult<SliderPayload>(nonce, { size, numberOfMoves: gaveUp ? -1 : numberOfMoves })
       .then(s => setFinalScore(s))
       .catch((e) => {
         setSubmitError(true);
@@ -106,13 +106,12 @@ const SliderGrid = (props: ImageGridProps) => {
       .finally(() => setSubmittingScore(false));
 
     setGameFinished(true);
-  }, []);
+  }, [nonce, numberOfMoves, size]);
 
-  const giveUp = () => {
+  const giveUp = useCallback(() => {
     lock.current = true;
-    setNumberOfMoves(-1);
-    finishGame();
-  };
+    finishGame(true);
+  }, [finishGame]);
 
   const screenReaderScore = () => {
     lock.current = true;
@@ -160,7 +159,7 @@ const SliderGrid = (props: ImageGridProps) => {
         finishGame();
       }, 250);
     }
-  }, [imageGrid, numberOfMoves, finishGame, size]);
+  }, [imageGrid, numberOfMoves, finishGame, size, checkForWin]);
 
   useEffect(() => {
     initGrid();

@@ -17,7 +17,7 @@ const dayGameMap: { [day: number]: Game } = {
   14: 'wordle',
   15: 'wheel',
   16: 'quiz',
-  17: 'riddle',
+  17: 'whack',
   18: 'find',
   19: 'word',
   20: 'sweeper',
