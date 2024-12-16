@@ -49,6 +49,11 @@ const config: Config = {
         base: "500",
         heading: "700",
       },
+      gridTemplateColumns: {
+        ...Array.from({ length: 32 }, (_, i) => ({
+          [i + 1]: `repeat(${i + 1}, minmax(0, 1fr))`,
+        })).reduce((acc, val) => ({ ...acc, ...val }), {}),
+      }
     },
   },
   plugins: [],

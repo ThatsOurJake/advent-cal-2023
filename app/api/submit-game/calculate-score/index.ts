@@ -9,6 +9,7 @@ import calculateWheelScore from "./wheel";
 import calculateWordScore from "./word";
 import calculateWordleScore from "./wordle";
 import calculateWhackScore from "./whack";
+import calculateCrosswordScore from "./crossword";
 
 const CALCULATOR_MAP = {
   match: calculateMatchScore,
@@ -22,6 +23,7 @@ const CALCULATOR_MAP = {
   sweeper: calculateSweeperScore,
   slider: calculateSliderScore,
   whack: calculateWhackScore,
+  crossword: calculateCrosswordScore,
 } as const;
 
 export type Game = keyof typeof CALCULATOR_MAP;
