@@ -9,18 +9,13 @@ import Alert from '@/app/components/alert';
 import { SliderPayload } from '@/app/api/submit-game/calculate-score/slider';
 import logger from '@/logger';
 
-type images = 'snowman';
+type images = 'snowman' | 'santa';
 type directions =  'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight';
 
 interface ImageGridProps {
   nonce: string;
   gridImage: images;
   size: number;
-}
-
-interface ImageData {
-  width: number;
-  height: number;
 }
 
 const SliderGrid = (props: ImageGridProps) => {

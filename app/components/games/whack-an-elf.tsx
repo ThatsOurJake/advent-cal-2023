@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { WhackPayload } from "@/app/api/submit-game/calculate-score/whack";
+import api from "@/app/utils/api";
+import logger from "@/logger";
+
 import Btn from "../btn";
 import Alert from "../alert";
-import api from "../../utils/api";
-import { WhackPayload } from "../../api/submit-game/calculate-score/whack";
 
 export interface TimelineItem {
   zone: 1 | 2 | 3 | 4 | 5;
@@ -80,7 +82,7 @@ const WhackAnElf = ({ timeline, nonce }: WhackAnElfProps) => {
       .then((s) => setFinalScore(s))
       .catch((e) => {
         setSubmitError(true);
-        console.error(e);
+        logger.error(e);
       })
       .finally(() => setSubmittingScore(false));
   }, [nonce]);
