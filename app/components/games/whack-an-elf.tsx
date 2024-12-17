@@ -99,7 +99,7 @@ const WhackAnElf = ({ timeline, nonce }: WhackAnElfProps) => {
         return;
       }
 
-      const zone = zones[zoneIndex].current;
+      const zone = zones[zoneIndex].current!;
 
       setTimeout(() => {
         animate(zone, item.visibleForSecs, item.isElf);
