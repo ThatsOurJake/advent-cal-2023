@@ -142,6 +142,41 @@ export const wheels: Wheel[] = [
       },
     ]
   },
+  {
+    id: 'wheel-1',
+    options: [
+      {
+        points: 200,
+        desc: 'Gain 200 points',
+        color: wheelSegmentColours.lime,
+      },
+      {
+        points: 500,
+        desc: 'Gain 500 points (Jackpot)',
+        color: wheelSegmentColours.orange,
+      },
+      {
+        points: 250,
+        desc: 'Gain 250 points',
+        color: wheelSegmentColours.purple,
+      },
+      {
+        points: 300,
+        desc: 'Gain 300 points',
+        color: wheelSegmentColours.blue,
+      },
+      {
+        points: 500,
+        desc: 'Gain 500 points (Jackpot)',
+        color: wheelSegmentColours.orange,
+      },
+      {
+        points: 250,
+        desc: 'Gain 250 points',
+        color: wheelSegmentColours.purple,
+      },
+    ]
+  },
 ];
 
 const calculateWheelScore = ({ wheelId, wheelOption }: WheelPayload): number => {

@@ -16,6 +16,7 @@ export interface TimelineItem {
 }
 
 const INITIAL_DELAY = 1000;
+const ANIMATION_DURATION = 2000;
 
 const assets = {
   elf: "/whack-an-elf/elf01.png",
@@ -107,7 +108,7 @@ const WhackAnElf = ({ timeline, nonce }: WhackAnElfProps) => {
     });
 
     const uniqueVisibleForSecs = timeline.map((item) => item.visibleForSecs);
-    const totalDuration = Math.max(...uniqueVisibleForSecs) + INITIAL_DELAY + timeline[timeline.length - 1].delay;
+    const totalDuration = Math.max(...uniqueVisibleForSecs) + INITIAL_DELAY + timeline[timeline.length - 1].delay + ANIMATION_DURATION;
 
     setTimeout(() => {
       finishGame();

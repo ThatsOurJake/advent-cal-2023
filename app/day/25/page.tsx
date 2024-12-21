@@ -3,9 +3,9 @@ import { wheels } from '@/app/api/submit-game/calculate-score/wheel';
 import rng from '@/app/utils/rng';
 import SpinWheel from '@/app/components/games/spin-wheel';
 
-export default function DayNight() {
+export default function DayTwentyFive() {
   const nonce = generateNonce('25', 'wheel');
-  const wheel = wheels[2];
+  const wheel = wheels[3];
   const winningIndex = rng(1, wheel.options.length) - 1;
 
   return (
