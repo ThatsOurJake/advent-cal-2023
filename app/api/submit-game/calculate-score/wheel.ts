@@ -143,7 +143,7 @@ export const wheels: Wheel[] = [
     ]
   },
   {
-    id: 'wheel-1',
+    id: 'wheel-4',
     options: [
       {
         points: 200,
