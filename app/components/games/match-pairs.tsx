@@ -7,6 +7,8 @@ import prettyMilliseconds from "pretty-ms";
 import api from "@/app/utils/api";
 import type { MatchPayload } from "@/app/api/submit-game/calculate-score/match";
 import logger from "@/logger";
+import Btn from "../btn";
+import Alert from "../alert";
 
 interface CardProps {
   isFlipped?: boolean;
@@ -20,13 +22,12 @@ const Card = ({ isFlipped = false, id, onClick, asset }: CardProps) => {
     <div className="w-full p-2 aspect-card" id="match-card" data-state={`${isFlipped && 'active'}`} onClick={() => onClick(id)}>
       <div className="match-card-content">
         <div className="match-card-front">
-          <div className="bg-indigo-300 rounded-md cursor-pointer border-4 border-indigo-200 flex items-center justify-center flex-col h-full">
-            <p className="font-bold text-xl"><span className="text-red-500">J</span><span className="text-green-500">D</span></p>
-            <p className="font-bold text-xl">Advent</p>
+          <div className="bg-main rounded-md cursor-pointer border-4 border-black flex items-center justify-center flex-col h-full">
+            <img src="/header.png" className="w-2/3" />
           </div>
         </div>
         <div className="match-card-back">
-          <div className="bg-indigo-100 rounded-md border-4 border-indigo-200 h-full flex justify-center items-center">
+          <div className="bg-main rounded-md border-4 border-black h-full flex justify-center items-center">
             <img src={`/icons/${asset}.png`} className="w-1/2" />
           </div>
         </div>
@@ -35,10 +36,16 @@ const Card = ({ isFlipped = false, id, onClick, asset }: CardProps) => {
   );
 }
 
+export type assets = 'bauble' | 'cane' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath';
+
 export interface GameCell {
-  id: string,
-  asset: 'bauble' | 'cane' | 'giftbox' | 'gingerbread' | 'jumper' | 'reindeer' | 'santa' | 'sleigh' | 'snowman' | 'tree' | 'wreath',
-  isFlipped: boolean,
+  /** 
+   * Position of the cell in the grid
+   * @example '0-0'
+   */
+  id: string;
+  asset: assets;
+  isFlipped: boolean;
 }
 
 interface MatchPairsProps {
@@ -95,6 +102,7 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
     const item = newGrid.find(x => x.id === id)!;
 
     if (item.isFlipped) {
+      lock.current = false;
       return;
     }
 
@@ -143,36 +151,40 @@ const MatchPairs = ({ grid, width, height, nonce }: MatchPairsProps) => {
   const startGame = () => {
     setHasStarted(true);
     startTime.current = Date.now();
-  }
+  };
 
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Match <b>{grid.length / 2}</b> Pairs</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Play!</button>
+        <p className="text-center text-2xl mb-1">Match <b>{grid.length / 2}</b> Pairs</p>
+        <p className="text-center mb-1">Can you find all the pairs quickly?</p>
+        <p className="text-center mb-4">The quicker you find them the higher your score!</p>
+        <Btn onClick={() => startGame()}>Play!</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Winner!</p>
-        <div className="mb-2">
-          <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="success">
+        <p className="text-2xl font-bold">Winner!</p>
+        <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="my-2">
+          <a href="/">
+            <Btn className="w-1/3">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
   if (hasStarted) {
     return (
-      <div className={`grid grid-cols-${width} grid-rows-${height}`}>
+      <div className={`grid grid-cols-${width} grid-rows-${height} w-2/3 mx-auto py-2`}>
         {
           gameGrid.map(x => <Card isFlipped={x.isFlipped} id={x.id} key={x.id} onClick={onClick} asset={x.asset} />)
         }

@@ -1,41 +1,181 @@
 import { generateNonce } from '@/app/utils/nonce';
-import type { WordAnswer } from '@/app/components/games/guess-word';
+import WhackAnElf, { type TimelineItem } from '../../components/games/whack-an-elf';
 
-const words: WordAnswer[] = [
+const ANIMATION_DURATION = 3750;
+
+const timeline: TimelineItem[] = [
   {
-    answer: 'c3RvY2tpbmc=',
-    missingLetters: [
-      [0, 3, 6],
-      [1, 4, 6],
-    ],
+    zone: 1,
+    delay: 100,
+    isElf: true,
+    visibleForSecs: 1500,
   },
   {
-    answer: 'Y2FuZHktY2FuZQ==',
-    missingLetters: [
-      [0, 3, 7, 9],
-    ],
+    zone: 2,
+    delay: 500,
+    isElf: false,
+    visibleForSecs: 1500,
   },
   {
-    answer: 'c25vd21hbg==',
-    missingLetters: [
-      [1, 4, 5],
-      [0, 3, 5, 6],
-    ],
+    zone: 3,
+    delay: 750,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 4,
+    delay: 1000,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 5,
+    delay: 1500,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  //
+  {
+    zone: 5,
+    delay: ANIMATION_DURATION + 1000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 4,
+    delay: ANIMATION_DURATION + 1500,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 3,
+    delay: ANIMATION_DURATION + 1750,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 2,
+    delay: ANIMATION_DURATION + 2000,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 1,
+    delay: ANIMATION_DURATION + 2500,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  //
+  {
+    zone: 2,
+    delay: ANIMATION_DURATION + 4000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 3,
+    delay: ANIMATION_DURATION + 4000,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 4,
+    delay: ANIMATION_DURATION + 4000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  //
+  {
+    zone: 1,
+    delay: ANIMATION_DURATION + 6000,
+    isElf: true,
+    visibleForSecs: 750,
+  },
+  {
+    zone: 2,
+    delay: ANIMATION_DURATION + 6500,
+    isElf: true,
+    visibleForSecs: 750,
+  },
+  {
+    zone: 3,
+    delay: ANIMATION_DURATION + 7000,
+    isElf: false,
+    visibleForSecs: 750,
+  },
+  {
+    zone: 4,
+    delay: ANIMATION_DURATION + 7500,
+    isElf: true,
+    visibleForSecs: 750,
+  },
+  {
+    zone: 5,
+    delay: ANIMATION_DURATION + 8000,
+    isElf: true,
+    visibleForSecs: 750,
+  },
+  //
+  {
+    zone: 1,
+    delay: ANIMATION_DURATION + 9000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 3,
+    delay: ANIMATION_DURATION + 9000,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  //
+  {
+    zone: 5,
+    delay: ANIMATION_DURATION + 9000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  //
+  {
+    zone: 1,
+    delay: ANIMATION_DURATION + 12000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 2,
+    delay: ANIMATION_DURATION + 12000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 3,
+    delay: ANIMATION_DURATION + 12000,
+    isElf: false,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 4,
+    delay: ANIMATION_DURATION + 12000,
+    isElf: true,
+    visibleForSecs: 1500,
+  },
+  {
+    zone: 5,
+    delay: ANIMATION_DURATION + 12000,
+    isElf: false,
+    visibleForSecs: 1500,
   },
 ];
 
-import dynamic from 'next/dynamic'
- 
-const GuessWord = dynamic(() => import('@/app/components/games/guess-word'), { ssr: false })
-
-export default function DayTwelve() {
-  const nonce = generateNonce('24', 'word');
+export default function DayTwentyFour() {
+  const nonce = generateNonce('24', 'whack');
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">24th December 2023</p>
+      <p className="font-bold text-center text-4xl">24th December 2024</p>
       <p className='text-center italic my-2'>Christmas Eve ✨</p>
-      <GuessWord words={words} nonce={nonce} />
+      <WhackAnElf nonce={nonce} timeline={timeline} />
     </div>
   )
 };

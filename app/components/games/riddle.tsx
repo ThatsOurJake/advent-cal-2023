@@ -5,10 +5,18 @@ import { useState } from "react";
 import api from "@/app/utils/api";
 import type { RiddlePayload } from '@/app/api/submit-game/calculate-score/riddle';
 import logger from "@/logger";
+import Btn from "../btn";
+import Alert from "../alert";
 
 export interface RiddleDIO {
   question: string;
+  /**
+   * An array of possible answers
+   */
   options: string[];
+  /**
+   * The correct answer in base64 and lowercase
+   */
   answer: string;
 }
 
@@ -50,37 +58,43 @@ const Riddle = ({ riddle, nonce }: RiddleWordProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Wrapped in words, a mystery unfurls, A riddle&apos;s charm, a twist of mind it swirls.</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the riddle 🌀</button>
+        <p className="text-center text-2xl mb-1">Christmas Riddle!</p>
+        <p className="text-center mb-1">Can you answer to the riddle from the options provided?</p>
+        <p className="text-center mb-4">To gain maximum points just choose the correct answer</p>
+        <Btn onClick={startGame}>Show me the riddle 🌀</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Final Results!</p>
-        <div className="mb-2">
-          { isCorrect && <p>Well done on guessing correctly 🚀</p>}
-          { !isCorrect && <p>That was not the right answer 😭</p>}
-          { submittingScore && <p>Calculating Score...</p> }
-          { !submittingScore && finalScore >= 0 && <p>You have earned <b>{finalScore}</b> points!</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="success">
+        <p className="text-2xl font-bold">Final Results!</p>
+        { isCorrect && <p>Well done on guessing correctly 🚀</p>}
+        { !isCorrect && <p>That was not the right answer 😭</p>}
+        { submittingScore && <p>Calculating Score...</p> }
+        { !submittingScore && finalScore >= 0 && <p>You have earned <b>{finalScore}</b> points!</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
   return (
     <div className="my-4">
-      <p className="text-lg font-bold text-center">{riddle.question}</p>
+      <Alert type="info">
+        <p className="text-lg font-bold text-center">{riddle.question}</p>
+      </Alert>
       <div className="flex flex-wrap my-2">
       {
         riddle.options.map(x => (
           <div key={x} className="p-2 w-full md:w-1/2">
-            <button onClick={() => onGuess(x)} className="w-full px-2 py-4 bg-fuchsia-300 border-fuchsia-100 border rounded-md drop-shadow-sm hover:underline">{x}</button>
+            <Btn onClick={() => onGuess(x)} className="w-full">{x}</Btn>
           </div>
         ))
       }

@@ -4,11 +4,11 @@ export interface WheelPayload {
 }
 
 const wheelSegmentColours = {
-  red: '#ef9a9a',
-  purple: '#ce93d8',
-  lime: '#e6ee9c',
-  orange: '#ffcc80',
-  blue: '#a5f3fc',
+  red: '#e66767',
+  purple: '#574b90',
+  lime: '#26de81',
+  orange: '#e15f41',
+  blue: '#546de5',
 };
 
 export interface Wheel {
@@ -68,7 +68,17 @@ export const wheels: Wheel[] = [
       {
         desc: 'Gain 25 points',
         points: 25,
-        color: wheelSegmentColours.blue,
+        color: wheelSegmentColours.red,
+      },
+      {
+        desc: 'Gain 150 points',
+        points: 150,
+        color: wheelSegmentColours.orange,
+      },
+      {
+        desc: 'Gain 25 points',
+        points: 25,
+        color: wheelSegmentColours.red,
       },
       {
         desc: 'Gain 50 points',
@@ -76,13 +86,8 @@ export const wheels: Wheel[] = [
         color: wheelSegmentColours.purple,
       },
       {
-        desc: 'Gain 100 points',
-        points: 100,
-        color: wheelSegmentColours.lime,
-      },
-      {
-        desc: 'Gain 200 points',
-        points: 200,
+        desc: 'Gain 25 points',
+        points: 25,
         color: wheelSegmentColours.red,
       },
       {
@@ -91,19 +96,14 @@ export const wheels: Wheel[] = [
         color: wheelSegmentColours.lime,
       },
       {
-        desc: 'Gain 50 points',
-        points: 50,
-        color: wheelSegmentColours.purple,
+        desc: 'Gain 25 points',
+        points: 25,
+        color: wheelSegmentColours.red,
       },
       {
-        desc: 'Gain 150 points',
-        points: 150,
-        color: wheelSegmentColours.orange,
-      },
-      {
-        desc: 'Gain 50 points',
-        points: 50,
-        color: wheelSegmentColours.purple,
+        desc: 'Gain 100 points',
+        points: 100,
+        color: wheelSegmentColours.lime,
       },
     ]
   },
@@ -111,47 +111,72 @@ export const wheels: Wheel[] = [
     id: 'wheel-3',
     options: [
       {
-        desc: 'Gain 150 points',
-        points: 150,
+        desc: 'Gain 25 points',
+        points: 25,
+        color: wheelSegmentColours.red,
+      },
+      {
+        desc: 'Gain 50 points',
+        points: 50,
         color: wheelSegmentColours.purple,
       },
       {
         desc: 'Gain 100 points',
         points: 100,
-        color: wheelSegmentColours.red,
+        color: wheelSegmentColours.lime,
       },
       {
-        desc: 'Gain 200 points',
-        points: 200,
-        color: wheelSegmentColours.lime,
+        desc: 'Gain 50 points',
+        points: 50,
+        color: wheelSegmentColours.purple,
+      },
+      {
+        desc: 'Gain 25 points',
+        points: 25,
+        color: wheelSegmentColours.red,
       },
       {
         desc: 'Gain 150 points',
         points: 150,
-        color: wheelSegmentColours.purple,
+        color: wheelSegmentColours.blue,
+      },
+    ]
+  },
+  {
+    id: 'wheel-4',
+    options: [
+      {
+        points: 200,
+        desc: 'Gain 200 points',
+        color: wheelSegmentColours.lime,
       },
       {
-        desc: 'Gain 250 points',
-        points: 250,
+        points: 500,
+        desc: 'Gain 500 points (Jackpot)',
         color: wheelSegmentColours.orange,
       },
       {
-        desc: 'Gain 100 points',
-        points: 100,
-        color: wheelSegmentColours.red,
-      },
-      {
-        desc: 'Gain 150 points',
-        points: 150,
+        points: 250,
+        desc: 'Gain 250 points',
         color: wheelSegmentColours.purple,
       },
       {
-        desc: 'Gain 200 points',
-        points: 200,
-        color: wheelSegmentColours.lime,
+        points: 300,
+        desc: 'Gain 300 points',
+        color: wheelSegmentColours.blue,
+      },
+      {
+        points: 500,
+        desc: 'Gain 500 points (Jackpot)',
+        color: wheelSegmentColours.orange,
+      },
+      {
+        points: 250,
+        desc: 'Gain 250 points',
+        color: wheelSegmentColours.purple,
       },
     ]
-  }
+  },
 ];
 
 const calculateWheelScore = ({ wheelId, wheelOption }: WheelPayload): number => {

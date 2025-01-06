@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { MouseEvent, useCallback, useRef, useState } from "react";
@@ -7,6 +6,9 @@ import prettyMilliseconds from "pretty-ms";
 import api from "@/app/utils/api";
 import type { DiffPayload } from "@/app/api/submit-game/calculate-score/diff";
 import logger from "@/logger";
+import Btn from "../btn";
+import Alert from "../alert";
+import { createPortal } from "react-dom";
 
 interface SpotTheDiffProps {
   baseFolder: string;
@@ -65,12 +67,13 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
     const { clientX, clientY, target } = e;
     const image = target as HTMLImageElement; 
     const { left, top } = image.getBoundingClientRect();
+    const scrolledTop = document.documentElement.scrollTop;
     
     return [
       clientX - left,
       clientY - top,
       clientX,
-      clientY
+      clientY + scrolledTop,
     ];
   }
 
@@ -121,54 +124,67 @@ const SpotTheDiff = ({ baseFolder, nonce, averages }: SpotTheDiffProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Can you spot the differences between the left and right image?</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the images</button>
+        <p className="text-center text-2xl mb-1">Spot the difference!</p>
+        <p className="text-center mb-1">Can you tell the difference between two images?</p>
+        <p className="text-center mb-4">There are &quot;{averages.length}&quot; differences and you will be scored based on your time taken.</p>
+        <Btn onClick={startGame}>Show me the images</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">An Inspector never forgets their magnifying glass!</p>
-        <div className="w-1/2 mx-auto mb-2">
-          <img className="w-full p-2" src={`/images/${baseFolder}/answers.jpeg`} onClick={onLocationClick} alt="answers" />
+      <Alert type="success">
+        <p className="text-2xl font-bold">Final Results!</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && !submitError && (
+          <>
+            <div className="w-1/3 mx-auto my-1">
+              <img className="w-full" src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />
+            </div>
+            <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
+          </>
+        )}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <div className="mb-2">
-          <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
-        </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
   return (
-    <div>
+    <div className="xl:w-2/3 mx-auto py-2">
       <div className="sr-only"><button onClick={screenReaderScore}>Click here if you are using a screen reader</button></div>
       <section aria-hidden>
-        <div className="fixed z-10 inset-0 pointer-events-none">
-          {
-            checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
-          }
-        </div>
+      {createPortal(
+          <div className="absolute z-10 inset-0 pointer-events-none">
+            {
+              checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
+            }
+          </div>,
+          document.body,
+        )}
         <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
           <div className="w-full relative cursor-not-allowed">
             <img className="p-2 absolute inset-0 z-10" src={`/images/${baseFolder}/original.jpeg`} alt="original"/>
-            <img className="p-2 absolute inset-0" src={`/images/${baseFolder}/mask.jpeg`} alt="mask" ref={maskRef} />
+            <img className="p-2 absolute inset-0 invisible" src={`/images/${baseFolder}/mask.jpeg`} alt="mask" ref={maskRef} />
           </div>
           <div className="cursor-pointer">
             <img className="w-full p-2" src={`/images/${baseFolder}/hidden.jpeg`} onClick={onLocationClick} alt="guess" />
             <p className="text-sm text-center italic">Guess Image</p>
           </div>
         </div>
-        <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
+        <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded" />
         <p className="italic text-center text-sm">Pinch and zoom on a macbook should zoom in!</p>
         <p className="text-center">Found {answers.length} / {averages.length}</p>
-        <button onClick={() => finishGame(answers.length)} className="bg-purple-400 py-1 px-4 my-2 hover:underline rounded-md mx-auto block">Give up!</button>
+        <div className="w-1/3 mx-auto my-2">
+          <Btn onClick={() => finishGame(answers.length)} className="w-full">Give up!</Btn>
+        </div>
       </section>
     </div>
   );

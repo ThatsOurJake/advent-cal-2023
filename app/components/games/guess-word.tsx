@@ -7,9 +7,18 @@ import rng from "@/app/utils/rng";
 import api from "@/app/utils/api";
 import type { WordPayload } from "@/app/api/submit-game/calculate-score/word";
 import logger from "@/logger";
+import Btn from "../btn";
+import TextInput from "../text-input";
+import Alert from "../alert";
 
 export interface WordAnswer {
+  /**
+   * Base64 encoded answer
+   */
   answer: string;
+  /**
+   * Array of missing letters - Allows for random selection
+   */
   missingLetters: number[][];
 }
 
@@ -31,7 +40,7 @@ const WordBox = ({ word, lock }: WordBoxProps) => {
   return (
     <div className="flex flex-col items-center my-4">
       <p className="font-bold text-3xl text-center">{display}</p>
-      <input type="text" placeholder="Guess Here!" className="w-2/3 border border-indigo-100 px-2 py-1 rounded-md" data-id-hash={word.answer} />
+      <TextInput placeholder="Guess Here!" className="w-2/3" data-id-hash={word.answer} />
     </div>
   )
 };
@@ -106,31 +115,41 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">Guess the words from the missing letters.</p>
+        <p className="text-center text-2xl mb-1">Guess the words from the missing letters.</p>
         <p className="text-center text-lg mb-2">For example E__no_ = Eggnog.</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Play!</button>
+        <p className="text-center mb-2">Answer using the whole word, not just the missing letters.</p>
+        <p className="text-center mb-4">The quicker you get guess the word, the higher your score!</p>
+        <Btn onClick={() => startGame()}>Start Game!</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Final Results:</p>
-        <ul>
-          {
-            words.map((x, index) => (<li key={`word-${index}`}>{atob(x.answer)}</li>))
-          }
-        </ul>
-        <div className="mb-2">
-          <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="success">
+        <p className="text-2xl font-bold">Final Results:</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        {
+          !submittingScore && !submitError && (
+            <>
+              <ul>
+                {
+                  words.map((x, index) => (<li className="list-decimal list-inside" key={`word-${index}`}>{atob(x.answer)}</li>))
+                }
+              </ul>
+              <p>It took {prettyMilliseconds(timeTaken * 1000, { verbose: true })} to guess {correctGuesses.current} / {words.length} correct!</p>
+            </>
+          )
+        }
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
@@ -139,7 +158,9 @@ const GuessWord = ({ words, nonce }: GuessWordProps) => {
       {
         words.map(x => (<WordBox word={x} key={x.answer} lock={lock.current} />))
       }
-      <button onClick={() => checkGuesses()} className="bg-purple-400 py-1 px-3 hover:underline rounded-md block mx-auto">Submit Guesses!</button>
+      <div className="w-1/2 mx-auto">
+        <Btn onClick={() => checkGuesses()} className="w-full">Submit Guesses!</Btn>
+      </div>
     </div>
   )
 };

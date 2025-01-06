@@ -6,6 +6,8 @@ import rng from "@/app/utils/rng";
 import api from "@/app/utils/api";
 import type { Wheel, WheelPayload } from "@/app/api/submit-game/calculate-score/wheel";
 import logger from "../../../logger";
+import Btn from "../btn";
+import Alert from "../alert";
 
 interface SpinWheelProps {
   wheel: Wheel;
@@ -86,23 +88,25 @@ const SpinWheel = ({ nonce, wheel, winningIndex }: SpinWheelProps) => {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
         <p className="text-center text-lg mb-2">How many points will the wheel give you?</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the wheel!</button>
+        <Btn onClick={startGame}>Show me the wheel!</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">The wheel has spoken!</p>
-        <div className="mb-2">
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+      <Alert type="success">
+        <p className="text-2xl font-bold">The wheel has decided!</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
@@ -122,8 +126,10 @@ const SpinWheel = ({ nonce, wheel, winningIndex }: SpinWheelProps) => {
           </div>
         </div>
       </div>
-      <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
-      <button onClick={() => spinTheWheel()} className="bg-purple-400 py-1 px-3 mx-auto block hover:underline rounded-md">Spin the wheel!</button>
+      <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded" />
+      <div className="w-1/2 mx-auto">
+        <Btn onClick={spinTheWheel} className="w-full">Spin the wheel!</Btn>
+      </div>
     </div>
   )
 };

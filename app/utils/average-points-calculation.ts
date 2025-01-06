@@ -1,7 +1,7 @@
 import type { ScoreboardUser } from "../services/mongo";
 
 const averagePointsCalculation = (scoreboard: ScoreboardUser[]) => {
-  return scoreboard.reduce((acc: { day: string; points: number, count: number }[], current) => {
+  return scoreboard.reduce((acc: { day: number; points: number, count: number }[], current) => {
     const { pointsToDays } = current;
     const copy = [...acc];
 

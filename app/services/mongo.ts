@@ -45,8 +45,8 @@ interface CreateUserDTO {
   name: string;
   squad: string;
   uuid: string;
-  daysComplete: string[];
-  pointsToDays: { day: string; points: number }[];
+  isMe: boolean;
+  pointsToDays: { day: number; points: number }[];
 }
 
 const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
@@ -57,8 +57,8 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
     name: data.name,
     squad: data.squad,
     uuid: crypto.randomUUID(),
-    daysComplete: [],
     pointsToDays: [],
+    isMe: false,
   };
 
   await col.insertOne(obj);
@@ -68,6 +68,7 @@ const createUser = async (data: CreateUserDIO): Promise<CreateUserDTO> => {
 
 interface UserWithScore extends CreateUserDTO {
   points: number;
+  daysComplete: number[];
 }
 
 const getUser = async (uuid: string): Promise<UserWithScore | null> => {
@@ -79,7 +80,8 @@ const getUser = async (uuid: string): Promise<UserWithScore | null> => {
   if (obj) {
     return {
       ...obj,
-      pointsToDays: obj.pointsToDays.sort((a, b) => parseInt(a.day) - parseInt(b.day)),
+      daysComplete: obj.pointsToDays.map(x => x.day),
+      pointsToDays: obj.pointsToDays.sort((a, b) => a.day - b.day),
       points: sumArray(obj.pointsToDays.map(x => x.points)),
     }
   }
@@ -102,9 +104,10 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
     squad: x.squad,
     points: sumArray(x.pointsToDays.map(x => x.points)),
     uuid: x.uuid,
-    pointsToDays: x.pointsToDays.sort((a, b) => parseInt(a.day) - parseInt(b.day))
+    pointsToDays: x.pointsToDays.sort((a, b) => a.day - b.day),
+    isMe: x.isMe,
   }))
-  .filter(x => !(x.name.toLowerCase() === 'jake king' && x.squad.toLowerCase() === 'jp'))
+  .filter(x => !x.isMe)
   .sort((a, b) => b.points - a.points)
   .reduce((acc: ScoreboardDTO, current) => {
     const prev = [...acc].pop();
@@ -120,7 +123,12 @@ const getScoreboard = async (): Promise<ScoreboardDTO> => {
   }, []);
 };
 
-const addPoints = async (uuid: string, points: number, dayNumber: string) => {
+const getUserScoreboardPosition = async (uuid: string) => {
+  const scoreboard = await getScoreboard();
+  return scoreboard.find(x => x.uuid === uuid)?.position || 0;
+}
+
+const addPoints = async (uuid: string, points: number, dayNumber: number) => {
   await connect();
 
   logger.info(`[addPoints] - Executing ${points}`);
@@ -132,7 +140,7 @@ const addPoints = async (uuid: string, points: number, dayNumber: string) => {
     return;
   }
 
-  await col.findOneAndUpdate({ uuid }, { $push: { daysComplete: dayNumber, pointsToDays: { day: dayNumber, points} } });
+  await col.findOneAndUpdate({ uuid }, { $push: { pointsToDays: { day: dayNumber, points} } });
 }
 
 const mongo = {
@@ -140,6 +148,7 @@ const mongo = {
   getUser,
   getScoreboard,
   addPoints,
+  getUserScoreboardPosition,
 };
 
 export default mongo;

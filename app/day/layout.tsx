@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import isValid from "@/app/utils/is-valid";
 import getUser from "@/app/utils/get-user";
 import AlreadyCompleted from "@/app/components/already-complete";
-import NotUnlocked from "../components/not-unlocked";
+import NotUnlocked from "@/app/components/not-unlocked";
 
 export default async function DayLayout({
   children,
@@ -24,18 +24,14 @@ export default async function DayLayout({
   }
 
   const user = await getUser();
-  const alreadyCompleted = user.daysComplete.includes(parsed.toString());
+  const alreadyCompleted = user.daysComplete.includes(parsed);
   const isUnlocked = isValid(parsed);
 
   return (
-    <main className="relative bg-black min-w-screen min-h-screen">
-      <div aria-hidden className="absolute inset-0 h-full w-full bg-cover blur-sm" style={{ backgroundImage: `url('/background.jpg')`}}>
-      </div>
-      <div className="py-2 z-10 relative w-full md:w-1/2 mx-auto bg-white p-4 min-h-screen">
-        {!isUnlocked && <NotUnlocked />}
-        {!alreadyCompleted && isUnlocked && children}
-        {alreadyCompleted && <AlreadyCompleted day={parsed.toString()} daysToPoints={user.pointsToDays} />}
-      </div>
-    </main>
+    <>
+      {!isUnlocked && <NotUnlocked />}
+      {!alreadyCompleted && isUnlocked && children}
+      {alreadyCompleted && <AlreadyCompleted day={parsed} daysToPoints={user.pointsToDays} />}
+    </>  
   );
 }

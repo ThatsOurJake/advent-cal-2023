@@ -7,6 +7,9 @@ import prettyMilliseconds from "pretty-ms";
 import api from "@/app/utils/api";
 import logger from "@/logger";
 import type { FindPayload } from "@/app/api/submit-game/calculate-score/find";
+import Btn from "../btn";
+import Alert from "../alert";
+import { createPortal } from "react-dom";
 
 interface FindSantaProps {
   baseFolder: string;
@@ -61,12 +64,13 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     const { clientX, clientY, target } = e;
     const image = target as HTMLImageElement; 
     const { left, top } = image.getBoundingClientRect();
+    const scrolledTop = document.documentElement.scrollTop;
     
     return [
       clientX - left,
       clientY - top,
       clientX,
-      clientY
+      clientY + scrolledTop,
     ];
   }
 
@@ -118,28 +122,36 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
   if (!hasStarted) {
     return (
       <div className="flex justify-center flex-col w-1/2 mx-auto py-2">
-        <p className="text-center text-lg mb-2">🧐 - Where has Santa gone, help find them?</p>
-        <button onClick={() => startGame()} className="bg-purple-400 py-1 hover:underline rounded-md">Show me the image</button>
+        <p className="text-center text-2xl mb-1">Santa has gone missing!</p>
+        <p className="text-center mb-1">Can you help find them as christmas will be ruined!</p>
+        <p className="text-center mb-4">The quicker you find Santa and Santa&apos;s clones the higher your score will be.</p>
+        <Btn onClick={startGame}>Show me the image</Btn>
       </div>
     );
   }
 
   if (gameFinished) {
     return (
-      <div className="flex justify-center flex-col w-2/3 mx-auto py-4 mt-2 text-center border rounded-sm drop-shadow-md bg-slate-100">
-        <p className="text-2xl mb-2 font-bold">Santa has been found!</p>
-        <div className="w-1/2 mx-auto mb-2">
-          <img className="w-full p-2" src={`/images/${baseFolder}/answers.jpeg`} onClick={onLocationClick} alt="answers" />
+      <Alert type="success">
+        <p className="text-2xl font-bold">Santa has been found!</p>
+        { submittingScore && <p>Calculating Score...</p>}
+        { !submittingScore && !submitError && (
+          <>
+            <div className="w-1/3 mx-auto my-1">
+              <img className="w-full " src={`/images/${baseFolder}/answers.jpeg`} alt="answers" />
+            </div>
+            <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
+          </>
+        )}
+        { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
+        { !submittingScore && submitError && <p className='text-red-500'>There has been an error calculating your score - Refresh the page and try again!</p>}
+        { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
+        <div className="py-2">
+          <a href="/">
+            <Btn className="w-full">Advent Selection!</Btn>
+          </a>
         </div>
-        <div className="mb-2">
-          <p>Time taken: {prettyMilliseconds(timeTaken * 1000, { verbose: true })}</p>
-          { submittingScore && <p>Calculating Score...</p>}
-          { !submittingScore && finalScore > 0 && <p>You have earned <b>{finalScore}</b> points! 🎉</p>}
-          { !submittingScore && submitError && <p>There has been an error calculating your score - Refresh the page and try again!</p>}
-          { !submittingScore && submitError && <p className="text-sm italic">Tech savvy? Check the console and report the error!</p>}
-        </div>
-        <a href="/" className="bg-purple-400 py-1 hover:underline rounded-md w-1/2 mx-auto" >Advent Selection!</a>
-      </div>
+      </Alert>
     );
   }
 
@@ -147,18 +159,23 @@ const FindSanta = ({ baseFolder, nonce, averages }: FindSantaProps) => {
     <div>
       <div className="sr-only"><button onClick={screenReaderScore}>Click here if you are using a screen reader</button></div>
       <section aria-hidden>
-        <div className="fixed z-10 inset-0 pointer-events-none">
-          {
-            checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
-          }
-        </div>
-        <div className="relative w-2/3 mx-auto">
+        {createPortal(
+          <div className="absolute z-10 inset-0 pointer-events-none">
+            {
+              checkmarks.map(([x, y]) => <div key={`${x}|${y}`} className="absolute" style={{ top: y, left: x }}><p className="text-2xl">✅</p></div>)
+            }
+          </div>,
+          document.body
+        )}
+        <div className="relative w-1/2 mx-auto">
           <img onClick={onLocationClick} className="w-full z-10 cursor-pointer" src={`/images/${baseFolder}/guess.jpeg`} />
           <img className="absolute inset-0 opacity-0 pointer-events-none" src={`/images/${baseFolder}/mask.jpeg`} ref={maskRef} />
         </div>
-        <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded dark:bg-gray-700" />
+        <hr className="w-2/3 h-1 mx-auto my-6 bg-gray-100 border-0 rounded" />
         <p className="text-center">Found {answers.length} / {averages.length}</p>
-        <button onClick={() => finishGame()} className="bg-purple-400 py-1 px-4 my-2 hover:underline rounded-md mx-auto block">Give up!</button>
+        <div className="w-1/3 mx-auto my-2">
+          <Btn onClick={() => finishGame()} className="w-full">Give up!</Btn>
+        </div>
       </section>
     </div>
   );

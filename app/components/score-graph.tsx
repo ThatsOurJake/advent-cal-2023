@@ -14,7 +14,7 @@ import {
   ChartData,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import getPositionColour from '../utils/get-position-colour';
+import getPositionColour from '@/app/utils/get-position-colour';
 
 ChartJS.register(
   CategoryScale,
@@ -27,9 +27,9 @@ ChartJS.register(
 );
 
 interface ScoreGraphProps {
-  pointsToDays?: { day: string; points: number }[];
-  averagePointsToDays?: { day: string; points: number }[];
-  otherUsers?: { name: string; position: number; points: { day: string; points: number }[] }[];
+  pointsToDays?: { day: number; points: number }[];
+  averagePointsToDays?: { day: number; points: number }[];
+  otherUsers?: { name: string; position: number; points: { day: number; points: number }[] }[];
 }
 
 const defaultProps: ScoreGraphProps = {
@@ -95,13 +95,15 @@ const ScoreGraph = (props: ScoreGraphProps) => {
     <>
       {
         loading && (
-          <div className='bg-slate-100 animate-pulse w-full h-full flex items-center justify-center'>
-            <p className='text-2xl font-bold'>Loading Scores...</p>
+          <div className='w-full aspect-video flex justify-center items-center border-2 border-black rounded-base bg-main shadow-light animate-pulse'>
+            <p className='text-2xl font-bold text-white'>Loading Scores...</p>
           </div>
         )
       }
       <div className={`${loading ? 'hidden' : 'visible'}`}>
-        <Line data={data} options={options} />
+        <div className='w-full aspect-video border-2 border-black rounded-base bg-white px-4 py-2'>
+          <Line data={data} options={options} />
+        </div>
       </div>
     </>
   );

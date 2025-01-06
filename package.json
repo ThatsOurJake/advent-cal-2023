@@ -11,14 +11,16 @@
   "dependencies": {
     "cfenv": "^1.2.4",
     "chart.js": "^4.4.1",
+    "classnames": "^2.5.1",
+    "env-helpers": "^1.2.0",
+    "idb-keyval": "^6.2.1",
     "mongodb": "^6.3.0",
-    "next": "14.0.3",
+    "next": "^14.2.13",
     "pino": "^8.16.2",
     "pretty-ms": "^8.0.0",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
-    "save": "^2.9.0",
     "shuffle-array": "^1.0.1"
   },
   "devDependencies": {

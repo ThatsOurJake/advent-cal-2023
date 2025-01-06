@@ -1,42 +1,27 @@
 import { generateNonce } from '@/app/utils/nonce';
-import type { WordAnswer } from '@/app/components/games/guess-word';
+import MatchPairs, { GameCell } from '../../components/games/match-pairs';
+import generateMatchCells from '../../utils/generate-match-cells';
 
-const words: WordAnswer[] = [
-  {
-    answer: 'YmF1Ymxl',
-    missingLetters: [
-      [0, 2, 5],
-      [1, 3],
-    ],
-  },
-  {
-    answer: 'c25vd2ZsYWtl',
-    missingLetters: [
-      [0, 3, 5, 7],
-      [1, 4, 6, 7],
-    ],
-  },
-  {
-    answer: 'cnVkb2xwaA==',
-    missingLetters: [
-      [0, 2, 4, 7],
-      [1, 4, 6],
-    ],
-  },
-];
+const WIDTH = 4;
+const HEIGHT = 3;
 
-import dynamic from 'next/dynamic'
- 
-const GuessWord = dynamic(() => import('@/app/components/games/guess-word'), { ssr: false })
+const grid = generateMatchCells(WIDTH, HEIGHT, [
+  'bauble',
+  'giftbox',
+  'snowman',
+  'gingerbread',
+  'tree',
+  'reindeer'
+]);
 
 export default function DayTwelve() {
-  const nonce = generateNonce('12', 'word');
+  const nonce = generateNonce('12', 'match');
+
 
   return (
     <div>
-      <p className="font-bold text-center text-4xl">12th December 2023</p>
-      <p className='text-center italic my-2'>Guess the word from the missing letters</p>
-      <GuessWord words={words} nonce={nonce} />
+      <p className="font-bold text-center text-4xl">12th December 2024</p>
+      <MatchPairs nonce={nonce} grid={grid} height={HEIGHT} width={WIDTH} />
     </div>
   )
 };
