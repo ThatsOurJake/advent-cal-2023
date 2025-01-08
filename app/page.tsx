@@ -5,7 +5,7 @@ import HomeOpen from "./home-open";
 
 export default async function Home() {
   const { publicRuntimeConfig } = getConfig();
-  const showWinnerDate = new Date(publicRuntimeConfig.showWinnerDate).valueOf();
+  const showWinnerDate = new Date(publicRuntimeConfig.showWinnersDate).valueOf();
 
   const showWinnerScreen = Date.now() > showWinnerDate;
 
