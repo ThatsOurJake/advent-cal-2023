@@ -1,9 +1,9 @@
-# Advent Calendar 2023
+# Advent Calendar 2024
 
-Source code for an advent calendar event ran by Jake in 2023
+Source code for an advent calendar event ran by Jake in 2024. After 2023's success, 2024 aimed to add a few more events as well as a reskin.
 
 ## Games
-There were a total of 8 different games, below is the explanation of each game and the scoring attached with them.
+There were a total of 12 different games, below is the explanation of each game and the scoring attached with them.
 
 ### Find Santa
 **Code name**: `find`
@@ -116,4 +116,55 @@ Word Score: Word Length * 10
 Attempt Score = (Word Length * 20) - (Attempts Taken * 20)
 
 Score = Word Score + Attempt Score
+```
+
+### Crossword
+**Code Name**: `crossword`
+
+**Description**: It's just a crossword, with clues and answers
+
+#### Scoring
+```
+There is a minimum time calculated based on the number of words and a predetermined time value, if you're too quick to gain 0 points.
+
+For each letter in the word you will gain a score, this is then totalled up, adding to this is the number of words in the crossword times by a multiplier.
+
+You overall score is a combination of the above rules.
+```
+
+### Present Sweeper
+**Code Name**: `sweeper`
+
+**Description**: It's minesweeper but with presents.
+
+#### Scoring
+```
+Presents Score = Presents Found x Score Per Present
+Tries Score = Score Per Try x Number of tries left
+
+Score = Presents Score + Tries Score
+```
+
+### Sliding Grid
+**Code Name**: `slider`
+
+**Description**: One of those NxN grids where the picture is jumbled.
+
+#### Scoring
+```
+Score is based on the number of moves you have left.
+
+Gave up = 50
+Less than the calculated number of moved = 150
+Anything else = 75
+```
+
+### Whack an Elf
+**Code Name**: `whack`
+
+**Description**: Hit the elves not the deer!
+
+#### Scoring
+```
+Score = Elves Whacked * Elf reward - Deers Whacked * Deer Penalty
 ```
